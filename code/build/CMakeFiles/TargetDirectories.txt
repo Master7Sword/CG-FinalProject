@@ -1,0 +1,3 @@
+/home/harvey/CG-FinalProject/code/build/CMakeFiles/Skybox_Project.dir
+/home/harvey/CG-FinalProject/code/build/CMakeFiles/edit_cache.dir
+/home/harvey/CG-FinalProject/code/build/CMakeFiles/rebuild_cache.dir
