@@ -63,7 +63,7 @@ void Skybox::initialize() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
     cubemapTexture = loadCubemap(faces);
-    shaderProgram = loadShader("skybox.vert", "skybox.frag");
+    shaderProgram = loadShader("shaders/skybox.vert", "shaders/skybox.frag");
 }
 
 void Skybox::render(const glm::mat4& view, const glm::mat4& projection) {

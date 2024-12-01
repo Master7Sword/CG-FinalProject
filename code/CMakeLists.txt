@@ -42,7 +42,10 @@ if(NOT glfw3_FOUND)
 endif()
 
 # 添加可执行文件
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(
+    ${PROJECT_NAME}
+    ${SOURCES}
+)
 
 # 链接库
 target_link_libraries(${PROJECT_NAME}
@@ -58,7 +61,18 @@ file(GLOB SHADER_SOURCES
 )
 
 # 复制着色器文件到构建目录
-foreach(SHADER_FILE ${SHADER_SOURCES})
-    get_filename_component(SHADER_NAME ${SHADER_FILE} NAME)
-    configure_file(${SHADER_FILE} ${CMAKE_BINARY_DIR}/${SHADER_NAME} COPYONLY)
+foreach(
+    SHADER_FILE
+    ${SHADER_SOURCES}
+)
+get_filename_component(
+    SHADER_NAME
+    ${SHADER_FILE}
+    NAME
+)
+configure_file(
+    ${SHADER_FILE}
+    ${CMAKE_BINARY_DIR}/${SHADER_NAME}
+    COPYONLY
+)
 endforeach()

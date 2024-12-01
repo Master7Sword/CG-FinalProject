@@ -79,7 +79,7 @@ int main() {
     skybox.initialize();
 
     ObjLoader objLoader;
-    if (!objLoader.load("assets/objects/Crate.obj", "assets/objects")) {
+    if (!objLoader.load("../static/objects/Crate.obj", "../static/objects")) {
         return -1;
     }
 

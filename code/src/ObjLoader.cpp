@@ -71,7 +71,7 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath)
 
     glBindVertexArray(0);
 
-    shaderProgram = loadShader("object.vert", "object.frag");
+    shaderProgram = loadShader("shaders/object.vert", "shaders/object.frag");
     return true;
 }
 
