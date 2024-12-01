@@ -9,4 +9,9 @@ sudo apt install libglfw3-dev
 sudo apt install build-essential
 
 export DISPLAY=:0
+
+cd code/build
+cmake ..
+make
+./Skybox_Project
 ```
