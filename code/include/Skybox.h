@@ -17,12 +17,12 @@ private:
     GLuint shaderProgram;
 
     std::vector<std::string> faces = {
-        "../static/textures/right.jpg",
-        "../static/textures/left.jpg",
-        "../static/textures/top.jpg",
-        "../static/textures/bottom.jpg",
-        "../static/textures/front.jpg",
-        "../static/textures/back.jpg"
+        "../../static/textures/right.jpg",
+        "../../static/textures/left.jpg",
+        "../../static/textures/top.jpg",
+        "../../static/textures/bottom.jpg",
+        "../../static/textures/front.jpg",
+        "../../static/textures/back.jpg"
     };
 
     GLuint loadCubemap(const std::vector<std::string>& faces);

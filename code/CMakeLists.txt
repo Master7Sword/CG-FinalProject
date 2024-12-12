@@ -16,6 +16,8 @@ set(SOURCES
     src/utils.cpp
     src/ObjLoader.cpp
     src/tiny_obj_loader.cc
+    src/Particle.cpp
+    src/ParticleRenderer.cpp
 )
 
 # 添加头文件目录
@@ -60,19 +62,19 @@ file(GLOB SHADER_SOURCES
     ${CMAKE_SOURCE_DIR}/shaders/*.frag
 )
 
-# 复制着色器文件到构建目录
-foreach(
-    SHADER_FILE
-    ${SHADER_SOURCES}
-)
-get_filename_component(
-    SHADER_NAME
-    ${SHADER_FILE}
-    NAME
-)
-configure_file(
-    ${SHADER_FILE}
-    ${CMAKE_BINARY_DIR}/${SHADER_NAME}
-    COPYONLY
-)
-endforeach()
+# # 复制着色器文件到构建目录
+# foreach(
+#     SHADER_FILE
+#     ${SHADER_SOURCES}
+# )
+# get_filename_component(
+#     SHADER_NAME
+#     ${SHADER_FILE}
+#     NAME
+# )
+# configure_file(
+#     ${SHADER_FILE}
+#     ${CMAKE_BINARY_DIR}/${SHADER_NAME}
+#     COPYONLY
+# )
+# endforeach()

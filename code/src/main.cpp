@@ -2,6 +2,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <vector>
+#include <algorithm>
+#include "Particle.h"
+#include "ParticleRenderer.h"
 #include "ObjLoader.h"
 #include "Skybox.h"
 #include "Camera.h"
@@ -47,6 +51,27 @@ void processInput(GLFWwindow* window, float deltaTime) {
 }
 
 
+std::vector<Particle> particles;
+
+void updateParticles(float deltaTime) {
+    std::vector<Particle> newParticles;  // 用来存储新生成的粒子
+
+    // 更新每个粒子的状态
+    for (auto& particle : particles) {
+        particle.update(deltaTime, newParticles);  // 将新生成的粒子存入 newParticles
+    }
+
+    // 将新生成的粒子添加到 particles
+    particles.insert(particles.end(), newParticles.begin(), newParticles.end());
+
+    // 删除TTL过期的粒子
+    particles.erase(std::remove_if(particles.begin(), particles.end(), 
+                                   [](const Particle& p) { return p.check_recycle(); }), 
+                    particles.end());
+}
+
+
+
 int main() {
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
@@ -75,18 +100,26 @@ int main() {
 
     glEnable(GL_DEPTH_TEST);
 
+    // 渲染对象
     Skybox skybox;
     skybox.initialize();
 
     ObjLoader objLoader;
-    if (!objLoader.load("../static/objects/Crate.obj", "../static/objects")) {
+    if (!objLoader.load("../../static/objects/Crate.obj", "../../static/objects")) {
         return -1;
     }
+    glm::mat4 model = glm::mat4(1.0f); 
 
-    glm::mat4 model = glm::mat4(1.0f); // 设置物体的模型矩阵
+    ParticleRenderer particleRenderer;
+    particleRenderer.initialize();
+
+    // 测试，先在(0, 0, -5)处发射一个烟花
+    Particle test;
+    test.initialize(glm::vec3(0.0f, 0.0f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 5.0f, 0.0f), 
+                    glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 100.0f, false, glm::vec3(0.0f,-0.981f, 0.0f));
+    particles.push_back(test);
 
     float lastFrame = 0.0f; // 上一帧的时间
-
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
         float deltaTime = currentFrame - lastFrame;
@@ -99,8 +132,13 @@ int main() {
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
         
+        // 先渲染固定的物体（天空盒、地面物体）
         skybox.render(view, projection);
         objLoader.render(view, projection, model);
+        std::cout << "deltaTime: " << deltaTime << " FPS: " << 1.0 / deltaTime << " len(particles): " << particles.size() << std::endl;
+        // 更新并渲染粒子
+        updateParticles(deltaTime);
+        particleRenderer.render(particles, view, projection); // 渲染粒子
 
         glfwSwapBuffers(window);
         glfwPollEvents();
