@@ -72,31 +72,23 @@ void ParticleRenderer::initialize() {
 
     glBindVertexArray(0);
 
-    shaderProgram = loadShaders("../shaders/particle.vert", "../shaders/particle.frag");
-    sphereModel.load("../../static/objects/sphere.obj", "../../static/objects");
+    sphereModel.load("../../static/objects/sphere(r=0.5).obj", "../../static/objects");
 }
 
 
-struct ParticleVertex {
-    glm::vec3 position;
-    glm::vec3 color;
-    float luminance;
-};
 
 void ParticleRenderer::render(const std::vector<Particle>& particles, const glm::mat4& view, const glm::mat4& projection) {
-    std::vector<ParticleVertex> vertexData;
-    for (const auto& particle : particles) {
-        vertexData.push_back({particle.getPosition(), particle.getColor(), particle.getLuminance()});
-    }
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertexData.size() * sizeof(ParticleVertex), vertexData.data(), GL_DYNAMIC_DRAW);
-
     glUseProgram(shaderProgram);
+
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_POINTS, 0, particles.size());
-    glBindVertexArray(0);
+    for (const auto& particle : particles) {
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), particle.getPosition());
+        model = glm::scale(model, glm::vec3(0.1f));  // 控制球体的大小
+
+        // 使用带颜色的渲染
+        sphereModel.renderWithColor(view, projection, model, particle.getColor());
+    }
 }
+

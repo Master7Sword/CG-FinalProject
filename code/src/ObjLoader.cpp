@@ -88,6 +88,24 @@ void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const
     glBindVertexArray(0);
 }
 
+void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model, const glm::vec3& color) {
+    glUseProgram(shaderProgram);
+
+    // 设置矩阵
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+    // 设置颜色（扩展支持）
+    glUniform1i(glGetUniformLocation(shaderProgram, "useOverrideColor"), GL_TRUE);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "overrideColor"), 1, glm::value_ptr(color));
+
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+
+
 GLuint ObjLoader::loadTexture(const std::string& texturePath) {
     GLuint textureID;
     glGenTextures(1, &textureID);

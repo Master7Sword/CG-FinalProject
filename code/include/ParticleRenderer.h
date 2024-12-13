@@ -22,6 +22,12 @@ private:
 
     GLuint compileShader(const char* source, GLenum shaderType);
     GLuint loadShaders(const char* vertexPath, const char* fragmentPath);
+
+    struct ParticleVertex {
+        glm::vec3 position;
+        glm::vec3 color;
+        float luminance;
+    };
 };
 
 #endif

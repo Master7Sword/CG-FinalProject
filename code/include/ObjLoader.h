@@ -13,6 +13,7 @@ public:
 
     bool load(const std::string& objPath, const std::string& mtlBasePath);
     void render(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model);
+    void renderWithColor(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model, const glm::vec3& color);
     GLuint loadTexture(const std::string& texturePath);
 
 private:

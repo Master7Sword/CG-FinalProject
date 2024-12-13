@@ -75,3 +75,10 @@ GLuint loadTexture(const std::string& path) {
 
     return textureID;
 }
+
+glm::vec3 getRandomColor() {
+    float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);  // 随机生成 [0, 1]
+    float g = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);  // 随机生成 [0, 1]
+    float b = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);  // 随机生成 [0, 1]
+    return glm::vec3(r, g, b);  // 返回生成的随机颜色
+}
