@@ -88,7 +88,7 @@ void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const
     glBindVertexArray(0);
 }
 
-void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model, const glm::vec3& color) {
+void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model, const glm::vec3& color, const float transparency) {
     glUseProgram(shaderProgram);
 
     // 设置矩阵
@@ -99,6 +99,7 @@ void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projecti
     // 设置颜色（扩展支持）
     glUniform1i(glGetUniformLocation(shaderProgram, "useOverrideColor"), GL_TRUE);
     glUniform3fv(glGetUniformLocation(shaderProgram, "overrideColor"), 1, glm::value_ptr(color));
+    glUniform1f(glGetUniformLocationARB(shaderProgram, "transparency"), transparency);
 
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);

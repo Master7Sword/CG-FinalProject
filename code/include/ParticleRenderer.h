@@ -18,16 +18,20 @@ public:
 private:
     GLuint VAO, VBO;
     GLuint shaderProgram;
-    ObjLoader sphereModel; // 用于加载小球模型
-
-    GLuint compileShader(const char* source, GLenum shaderType);
-    GLuint loadShaders(const char* vertexPath, const char* fragmentPath);
+    GLuint framebuffer;
+    GLuint textureColorBuffer;
+    GLuint rbo;
+    ObjLoader sphereModel; // 小球模型
 
     struct ParticleVertex {
         glm::vec3 position;
         glm::vec3 color;
         float luminance;
     };
+
+    GLuint compileShader(const char* source, GLenum shaderType);
+    GLuint loadShaders(const char* vertexPath, const char* fragmentPath);
+    
 };
 
 #endif

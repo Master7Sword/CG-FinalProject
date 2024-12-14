@@ -7,7 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-float skybox_size = 30.0;
+float skybox_size = 50.0;
 void Skybox::initialize() {
     float skyboxVertices[] = {
     // positions          

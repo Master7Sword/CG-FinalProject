@@ -73,6 +73,10 @@ void ParticleRenderer::initialize() {
     glBindVertexArray(0);
 
     sphereModel.load("../../static/objects/sphere(r=0.5).obj", "../../static/objects");
+
+    // 启用混合模式
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 
@@ -88,7 +92,6 @@ void ParticleRenderer::render(const std::vector<Particle>& particles, const glm:
         model = glm::scale(model, glm::vec3(0.1f));  // 控制球体的大小
 
         // 使用带颜色的渲染
-        sphereModel.renderWithColor(view, projection, model, particle.getColor());
+        sphereModel.renderWithColor(view, projection, model, particle.getColor(),  particle.getTransparency());
     }
 }
-

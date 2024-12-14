@@ -16,8 +16,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
+
 // 处理按键输入
-void processInput(GLFWwindow* window, float deltaTime) {
+bool enterKeyPressed = false;
+void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& particles) {
     const float cameraSpeed = 1.0f * deltaTime; // 摄像机移动速度
 
     // 摄像机位置移动 (WASD)
@@ -47,6 +49,22 @@ void processInput(GLFWwindow* window, float deltaTime) {
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
         Camera::adjustYaw(rotationSpeed); // 向右看
+    }
+
+    // 发射烟花
+    if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+        if (!enterKeyPressed) {
+            // 仅在按下时触发一次
+            enterKeyPressed = true; // 标记为已按下
+
+            Particle test;
+            test.initialize(glm::vec3(0.0f, -15.0f, -30.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 12.0f, 0.0f), 
+                            glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 100.0f, false, false, glm::vec3(0.0f,-0.981f, 0.0f));
+            particles.push_back(test);
+        }
+    } else {
+        // 当按键松开时重置标记
+        enterKeyPressed = false;
     }
 }
 
@@ -113,19 +131,13 @@ int main() {
     ParticleRenderer particleRenderer;
     particleRenderer.initialize();
 
-    // 测试，先在(0, 0, -5)处发射一个烟花
-    Particle test;
-    test.initialize(glm::vec3(0.0f, 0.0f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 5.0f, 0.0f), 
-                    glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 100.0f, false, glm::vec3(0.0f,-0.981f, 0.0f));
-    particles.push_back(test);
-
     float lastFrame = 0.0f; // 上一帧的时间
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
         float deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        processInput(window, deltaTime);
+        processInput(window, deltaTime, particles);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
