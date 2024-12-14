@@ -3,7 +3,7 @@
 
 void Particle::initialize(const glm::vec3& position, const glm::vec3& direction, const glm::vec3& velocity, 
                           const glm::vec3& color, float transparency, float ttl, bool is_boomed, bool is_tail,
-                          const glm::vec3& acceleration = glm::vec3(0.0f, -0.981f, 0.0f)) {
+                          const glm::vec3& acceleration) {
     this->loc = position;
     this->dir = direction;
     this->v = velocity;
@@ -15,6 +15,7 @@ void Particle::initialize(const glm::vec3& position, const glm::vec3& direction,
     this->is_tail = is_tail;
     this->recycle = false;
 }
+
 
 void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
     // 在原地添加一个粒子实现拖尾
@@ -31,6 +32,7 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
 
         if (!is_boomed) {
             if (v.y < 0.5f) {
+                explosionSound.play();
                 is_boomed = true;
                 this->recycle = true;
                 for (int i = 0; i < 200; ++i) {

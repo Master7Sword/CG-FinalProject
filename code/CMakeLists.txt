@@ -29,6 +29,7 @@ include_directories(
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(SFML 2.5 COMPONENTS audio REQUIRED)
 
 # 检查是否找到依赖
 if(NOT OPENGL_FOUND)
@@ -54,6 +55,7 @@ target_link_libraries(${PROJECT_NAME}
     OpenGL::GL
     GLEW::GLEW
     glfw
+    sfml-audio
 )
 
 # 处理着色器文件

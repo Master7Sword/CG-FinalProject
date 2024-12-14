@@ -5,6 +5,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+sf::SoundBuffer launchBuffer;
+sf::SoundBuffer explosionBuffer;
+sf::Sound launchSound;
+sf::Sound explosionSound;
+
+
 std::string readFile(const std::string& filePath) {
     std::ifstream file(filePath, std::ios::in | std::ios::binary);
     if (!file) {
@@ -15,7 +21,6 @@ std::string readFile(const std::string& filePath) {
     buffer << file.rdbuf();
     return buffer.str();
 }
-
 
 GLuint loadShader(const char* vertexPath, const char* fragmentPath) {
     // Shader loading and compilation logic

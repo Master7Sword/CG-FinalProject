@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 
+
 class Particle {
 public:
     void initialize(const glm::vec3& position, const glm::vec3& direction, const glm::vec3& velocity,
@@ -32,6 +33,7 @@ private:
     bool is_boomed;      // 是否已爆炸
     bool recycle;        // 是否已可回收
     bool is_tail;        // 是否为拖尾粒子
+
 };
 
 #endif

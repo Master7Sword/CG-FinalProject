@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SFML/Audio.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -11,11 +12,11 @@
 #include "Camera.h"
 #include "utils.h"
 
+
 // 窗口大小调整回调
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
-
 
 // 处理按键输入
 bool enterKeyPressed = false;
@@ -57,10 +58,14 @@ void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& pa
             // 仅在按下时触发一次
             enterKeyPressed = true; // 标记为已按下
 
+            launchSound.play(); // 发射音效
+
             Particle test;
+
             test.initialize(glm::vec3(0.0f, -15.0f, -30.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 12.0f, 0.0f), 
                             glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 100.0f, false, false, glm::vec3(0.0f,-0.981f, 0.0f));
             particles.push_back(test);
+            
         }
     } else {
         // 当按键松开时重置标记
@@ -117,6 +122,18 @@ int main() {
     }
 
     glEnable(GL_DEPTH_TEST);
+
+    // 初始化音效
+    if (!launchBuffer.loadFromFile("../../static/audio/launch.wav")) {
+        std::cerr << "Failed to load launch.wav" << std::endl;
+        return -1;
+    }
+    launchSound.setBuffer(launchBuffer);
+    if (!explosionBuffer.loadFromFile("../../static/audio/explosion.wav")) {
+        std::cerr << "Failed to load explosion sound!" << std::endl;
+        return -1;
+    }
+    explosionSound.setBuffer(explosionBuffer);
 
     // 渲染对象
     Skybox skybox;
