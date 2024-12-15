@@ -32,7 +32,8 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
 
         if (!is_boomed) {
             if (v.y < 0.5f) {
-                explosionSound.play();
+                explosionSound[explosion_index].play();
+                explosion_index = (explosion_index + 1) % MAX_SOUNDS;
                 is_boomed = true;
                 this->recycle = true;
                 for (int i = 0; i < 200; ++i) {
@@ -63,4 +64,21 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
 
 bool Particle::check_recycle() const {
     return ttl <= 0.0f || recycle == true || transparency <= 0.0f;
+}
+
+void updateParticles(float deltaTime, std::vector<Particle>& particles) {
+    std::vector<Particle> newParticles;  // 用来存储新生成的粒子
+
+    // 更新每个粒子的状态
+    for (auto& particle : particles) {
+        particle.update(deltaTime, newParticles);  // 将新生成的粒子存入 newParticles
+    }
+
+    // 将新生成的粒子添加到 particles
+    particles.insert(particles.end(), newParticles.begin(), newParticles.end());
+
+    // 删除TTL过期的粒子
+    particles.erase(std::remove_if(particles.begin(), particles.end(), 
+                                   [](const Particle& p) { return p.check_recycle(); }), 
+                    particles.end());
 }

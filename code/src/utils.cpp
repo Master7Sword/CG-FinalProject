@@ -5,10 +5,19 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-sf::SoundBuffer launchBuffer;
-sf::SoundBuffer explosionBuffer;
-sf::Sound launchSound;
-sf::Sound explosionSound;
+
+sf::SoundBuffer launchBuffer[10];
+sf::SoundBuffer explosionBuffer[10];
+sf::Sound launchSound[10];
+sf::Sound explosionSound[10];
+int launch_index = 0;
+int explosion_index = 0;
+
+
+// 窗口大小调整回调
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
 
 
 std::string readFile(const std::string& filePath) {
@@ -86,4 +95,11 @@ glm::vec3 getRandomColor() {
     float g = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);  // 随机生成 [0, 1]
     float b = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);  // 随机生成 [0, 1]
     return glm::vec3(r, g, b);  // 返回生成的随机颜色
+}
+
+
+void measureTime(const std::string &stageName, const Clock::time_point &start) {
+    auto end = Clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    std::cout << stageName << "耗时: " << duration << " 微秒" << std::endl;
 }

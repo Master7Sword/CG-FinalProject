@@ -36,4 +36,7 @@ private:
 
 };
 
+
+void updateParticles(float deltaTime, std::vector<Particle>& particles);
+
 #endif

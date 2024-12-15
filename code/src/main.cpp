@@ -5,6 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include <algorithm>
+
 #include "Particle.h"
 #include "ParticleRenderer.h"
 #include "ObjLoader.h"
@@ -13,10 +14,6 @@
 #include "utils.h"
 
 
-// 窗口大小调整回调
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
-}
 
 // 处理按键输入
 bool enterKeyPressed = false;
@@ -58,7 +55,8 @@ void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& pa
             // 仅在按下时触发一次
             enterKeyPressed = true; // 标记为已按下
 
-            launchSound.play(); // 发射音效
+            launchSound[launch_index].play(); // 发射音效
+            launch_index = (launch_index + 1) % MAX_SOUNDS;
 
             Particle test;
 
@@ -73,27 +71,7 @@ void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& pa
     }
 }
 
-
-std::vector<Particle> particles;
-
-void updateParticles(float deltaTime) {
-    std::vector<Particle> newParticles;  // 用来存储新生成的粒子
-
-    // 更新每个粒子的状态
-    for (auto& particle : particles) {
-        particle.update(deltaTime, newParticles);  // 将新生成的粒子存入 newParticles
-    }
-
-    // 将新生成的粒子添加到 particles
-    particles.insert(particles.end(), newParticles.begin(), newParticles.end());
-
-    // 删除TTL过期的粒子
-    particles.erase(std::remove_if(particles.begin(), particles.end(), 
-                                   [](const Particle& p) { return p.check_recycle(); }), 
-                    particles.end());
-}
-
-
+std::vector<Particle> particles; // 存储所有粒子
 
 int main() {
     if (!glfwInit()) {
@@ -124,16 +102,19 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     // 初始化音效
-    if (!launchBuffer.loadFromFile("../../static/audio/launch.wav")) {
-        std::cerr << "Failed to load launch.wav" << std::endl;
-        return -1;
+    for (int i = 0; i < MAX_SOUNDS; ++i){
+        if (!launchBuffer[i].loadFromFile("../../static/audio/launch.wav")) {
+            std::cerr << "Failed to load launch.wav" << std::endl;
+            return -1;
+        }
+        launchSound[i].setBuffer(launchBuffer[i]);
+        if (!explosionBuffer[i].loadFromFile("../../static/audio/explosion.wav")) {
+            std::cerr << "Failed to load explosion sound!" << std::endl;
+            return -1;
+        }
+        explosionSound[i].setBuffer(explosionBuffer[i]);
     }
-    launchSound.setBuffer(launchBuffer);
-    if (!explosionBuffer.loadFromFile("../../static/audio/explosion.wav")) {
-        std::cerr << "Failed to load explosion sound!" << std::endl;
-        return -1;
-    }
-    explosionSound.setBuffer(explosionBuffer);
+    
 
     // 渲染对象
     Skybox skybox;
@@ -150,28 +131,51 @@ int main() {
 
     float lastFrame = 0.0f; // 上一帧的时间
     while (!glfwWindowShouldClose(window)) {
+        auto frameStart = Clock::now();
+
+        // 1. 计算帧时间
         float currentFrame = glfwGetTime();
         float deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+        std::cout << "deltaTime: " << deltaTime << " FPS: " << 1.0 / deltaTime << std::endl;
 
+        auto inputStart = Clock::now();
+        // 2. 处理输入
         processInput(window, deltaTime, particles);
+        measureTime("输入处理", inputStart);
 
+        auto clearStart = Clock::now();
+        // 3. 清屏
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        measureTime("清屏", clearStart);
 
+        auto renderStart = Clock::now();
+        // 4. 渲染固定物体
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
-        
-        // 先渲染固定的物体（天空盒、地面物体）
         skybox.render(view, projection);
         objLoader.render(view, projection, model);
-        std::cout << "deltaTime: " << deltaTime << " FPS: " << 1.0 / deltaTime << " len(particles): " << particles.size() << std::endl;
-        // 更新并渲染粒子
-        updateParticles(deltaTime);
-        particleRenderer.render(particles, view, projection); // 渲染粒子
+        measureTime("固定物体渲染", renderStart);
 
+        auto particleUpdateStart = Clock::now();
+        // 5. 更新粒子
+        updateParticles(deltaTime, particles);
+        measureTime("粒子更新", particleUpdateStart);
+
+        auto particleRenderStart = Clock::now();
+        // 6. 渲染粒子
+        particleRenderer.render(particles, view, projection);
+        measureTime("粒子渲染", particleRenderStart);
+
+        auto bufferSwapStart = Clock::now();
+        // 7. 交换缓冲区和轮询事件
         glfwSwapBuffers(window);
         glfwPollEvents();
+        measureTime("缓冲交换和事件处理", bufferSwapStart);
+
+        measureTime("完整帧", frameStart);
     }
+
 
     glfwTerminate();
     return 0;
