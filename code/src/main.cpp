@@ -14,7 +14,6 @@
 #include "utils.h"
 
 
-
 // 处理按键输入
 bool enterKeyPressed = false;
 void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& particles) {
@@ -124,7 +123,6 @@ int main() {
     if (!objLoader.load("../../static/objects/Crate.obj", "../../static/objects")) {
         return -1;
     }
-    glm::mat4 model = glm::mat4(1.0f); 
 
     ParticleRenderer particleRenderer;
     particleRenderer.initialize();
@@ -153,6 +151,7 @@ int main() {
         // 4. 渲染固定物体
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
+        glm::mat4 model = glm::mat4(1.0f); 
         skybox.render(view, projection);
         objLoader.render(view, projection, model);
         measureTime("固定物体渲染", renderStart);

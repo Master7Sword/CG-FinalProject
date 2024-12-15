@@ -16,7 +16,7 @@ public:
     void render(const std::vector<Particle>& particles, const glm::mat4& view, const glm::mat4& projection);
 
 private:
-    GLuint VAO, VBO, instanceVBO;
+    GLuint VAO, VBO;
     GLuint shaderProgram;
     GLuint framebuffer;
     GLuint textureColorBuffer;
