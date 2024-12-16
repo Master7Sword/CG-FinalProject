@@ -15,6 +15,7 @@ public:
 private:
     GLuint skyboxVAO, skyboxVBO, cubemapTexture;
     GLuint shaderProgram;
+    float skybox_size;
 
     std::vector<std::string> faces = {
         "../../static/skybox_textures/right.png",

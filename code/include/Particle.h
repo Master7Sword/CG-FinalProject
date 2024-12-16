@@ -33,7 +33,6 @@ private:
     bool is_boomed;      // 是否已爆炸
     bool recycle;        // 是否已可回收
     bool is_tail;        // 是否为拖尾粒子
-
 };
 
 

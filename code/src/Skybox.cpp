@@ -7,10 +7,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-float skybox_size = 50.0;
+
 void Skybox::initialize() {
-    float skyboxVertices[] = {
-    // positions          
+    skybox_size = 50.0;
+    float skyboxVertices[] = {      
     -skybox_size,  skybox_size, -skybox_size,
     -skybox_size, -skybox_size, -skybox_size,
      skybox_size, -skybox_size, -skybox_size,
@@ -70,6 +70,9 @@ void Skybox::render(const glm::mat4& view, const glm::mat4& projection) {
     glDepthFunc(GL_LEQUAL);
     glUseProgram(shaderProgram);
     glm::mat4 skyboxView = glm::mat4(glm::mat3(view)); // remove translation
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::scale(model, glm::vec3(1.0f)); // 不能超过1.0f，不然skybox会消失
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(skyboxView));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glBindVertexArray(skyboxVAO);
