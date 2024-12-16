@@ -17,16 +17,12 @@ public:
 
 private:
     GLuint VAO, VBO;
-    GLuint shaderProgram;
     GLuint framebuffer;
     GLuint textureColorBuffer;
-    GLuint rbo;
     ObjLoader sphereModel; // 小球模型
-
 
     GLuint compileShader(const char* source, GLenum shaderType);
     GLuint loadShaders(const char* vertexPath, const char* fragmentPath);
-    
 };
 
 #endif

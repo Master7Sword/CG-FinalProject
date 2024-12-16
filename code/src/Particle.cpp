@@ -21,12 +21,12 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
     // 在原地添加一个粒子实现拖尾
     if(!is_tail){
         Particle tail;
-        tail.initialize(loc, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), color, transparency-0.05f, 1.0f, true, true, glm::vec3(0.0f, 0.0f, 0.0f));
+        tail.initialize(loc, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), color, transparency-0.05f, 3.0f, true, true, glm::vec3(0.0f, 0.0f, 0.0f));
         newParticles.push_back(tail);
 
         // 更新当前粒子属性
-        float k = -0.005; // 空气阻力系数
-        a = v * v * k + glm::vec3(0.0f,-1.981f, 0.0f);
+        float k = -0.02; // 空气阻力系数
+        a = v * v * k + glm::vec3(0.0f,-2.0f, 0.0f);
         v += a * deltaTime;
         loc += v * deltaTime;
 
@@ -44,20 +44,22 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
                     ));
                     glm::vec3 velocity = dir * 4.0f;
                     glm::vec3 color = getRandomColor();
+                    // glm::vec3 color = glm::vec3(255.0f/255.0f, 99.0f/255.0f, 71.0f/255.0f);
                     Particle p;
                     p.initialize(loc, dir, velocity, color, 1.0f, 5.0f, true, false, glm::vec3(0.0f,-0.981f, 0.0f));
                     newParticles.push_back(p);
                 }
             }
+            transparency = std::max(0.0f, transparency - 0.2f * deltaTime);
         } else {
             ttl -= deltaTime;
-            transparency = std::max(0.0f, transparency - 0.2f * deltaTime);
+            transparency = std::max(0.0f, transparency - 0.3f * deltaTime);
         }
     }
     else{ 
         // 拖尾粒子更新
         ttl -= deltaTime;
-        transparency = std::max(0.0f, transparency - 3.0f * deltaTime);
+        transparency = std::max(0.0f, transparency - 1.5f * deltaTime);
     }
 }
 

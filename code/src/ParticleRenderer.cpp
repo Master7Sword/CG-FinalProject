@@ -2,14 +2,15 @@
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+#include <thread>
+#include <vector>
 #include "utils.h"
 
-ParticleRenderer::ParticleRenderer() : VAO(0), VBO(0), shaderProgram(0) {}
+ParticleRenderer::ParticleRenderer() : VAO(0), VBO(0){}
 
 ParticleRenderer::~ParticleRenderer() {
     if (VAO) glDeleteVertexArrays(1, &VAO);
     if (VBO) glDeleteBuffers(1, &VBO);
-    if (shaderProgram) glDeleteProgram(shaderProgram);
 }
 
 GLuint ParticleRenderer::compileShader(const char* source, GLenum shaderType) {
@@ -82,16 +83,10 @@ void ParticleRenderer::initialize() {
 
 
 void ParticleRenderer::render(const std::vector<Particle>& particles, const glm::mat4& view, const glm::mat4& projection) {
-    glUseProgram(shaderProgram);
-
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
     for (const auto& particle : particles) {
         glm::mat4 model = glm::translate(glm::mat4(1.0f), particle.getPosition());
-        model = glm::scale(model, glm::vec3(0.1f));  // 控制球体的大小
+        model = glm::scale(model, glm::vec3(0.1f)); 
 
-        // 使用带颜色的渲染
         sphereModel.renderWithColor(view, projection, model, particle.getColor(),  particle.getTransparency());
     }
 }

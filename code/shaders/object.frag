@@ -4,7 +4,7 @@ out vec4 FragColor;
 in vec2 TexCoord;
 
 uniform sampler2D texture1;
-uniform vec3 overrideColor; // 新增的颜色变量
+uniform vec3 overrideColor; // 颜色变量
 uniform bool useOverrideColor; // 是否使用覆盖颜色
 uniform float transparency;
 

@@ -75,38 +75,6 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath)
     return true;
 }
 
-void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model) {
-    glUseProgram(shaderProgram);
-
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
-}
-
-void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model, const glm::vec3& color, const float transparency) {
-    glUseProgram(shaderProgram);
-
-    // 设置矩阵
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-
-    // 设置颜色（扩展支持）
-    glUniform1i(glGetUniformLocation(shaderProgram, "useOverrideColor"), GL_TRUE);
-    glUniform3fv(glGetUniformLocation(shaderProgram, "overrideColor"), 1, glm::value_ptr(color));
-    glUniform1f(glGetUniformLocationARB(shaderProgram, "transparency"), transparency);
-
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
-}
-
-
 GLuint ObjLoader::loadTexture(const std::string& texturePath) {
     GLuint textureID;
     glGenTextures(1, &textureID);
@@ -132,7 +100,6 @@ GLuint ObjLoader::loadTexture(const std::string& texturePath) {
 
     return textureID;
 }
-
 
 GLuint ObjLoader::loadShader(const char* vertexPath, const char* fragmentPath) {
     // 读取顶点着色器源码
@@ -165,4 +132,35 @@ GLuint ObjLoader::loadShader(const char* vertexPath, const char* fragmentPath) {
     glDeleteShader(fragmentShader);
 
     return program;
+}
+
+void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model) {
+    glUseProgram(shaderProgram);
+
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+
+void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model, const glm::vec3& color, const float transparency) {
+    glUseProgram(shaderProgram);
+
+    // 设置矩阵
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+    // 设置颜色
+    glUniform1i(glGetUniformLocation(shaderProgram, "useOverrideColor"), GL_TRUE);
+    glUniform3fv(glGetUniformLocation(shaderProgram, "overrideColor"), 1, glm::value_ptr(color));
+    glUniform1f(glGetUniformLocationARB(shaderProgram, "transparency"), transparency);
+
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }

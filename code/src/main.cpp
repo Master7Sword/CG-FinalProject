@@ -59,7 +59,7 @@ void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& pa
 
             Particle test;
 
-            test.initialize(glm::vec3(0.0f, -15.0f, -30.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 12.0f, 0.0f), 
+            test.initialize(glm::vec3(0.0f, -15.0f, -50.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 13.0f, 0.0f), 
                             glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 100.0f, false, false, glm::vec3(0.0f,-0.981f, 0.0f));
             particles.push_back(test);
             
@@ -135,44 +135,44 @@ int main() {
         float currentFrame = glfwGetTime();
         float deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        std::cout << "deltaTime: " << deltaTime << " FPS: " << 1.0 / deltaTime << std::endl;
+        std::cout << "deltaTime: " << deltaTime << " FPS: " << 1.0 / deltaTime << " #particles: " << particles.size() <<  std::endl;
 
-        auto inputStart = Clock::now();
+        // auto inputStart = Clock::now();
         // 2. 处理输入
         processInput(window, deltaTime, particles);
-        measureTime("输入处理", inputStart);
+        // measureTime("输入处理", inputStart);
 
-        auto clearStart = Clock::now();
+        // auto clearStart = Clock::now();
         // 3. 清屏
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        measureTime("清屏", clearStart);
+        // measureTime("清屏", clearStart);
 
-        auto renderStart = Clock::now();
+        // auto renderStart = Clock::now();
         // 4. 渲染固定物体
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
         glm::mat4 model = glm::mat4(1.0f); 
         skybox.render(view, projection);
         objLoader.render(view, projection, model);
-        measureTime("固定物体渲染", renderStart);
+        // measureTime("固定物体渲染", renderStart);
 
-        auto particleUpdateStart = Clock::now();
+        // auto particleUpdateStart = Clock::now();
         // 5. 更新粒子
         updateParticles(deltaTime, particles);
-        measureTime("粒子更新", particleUpdateStart);
+        // measureTime("粒子更新", particleUpdateStart);
 
-        auto particleRenderStart = Clock::now();
+        // auto particleRenderStart = Clock::now();
         // 6. 渲染粒子
         particleRenderer.render(particles, view, projection);
-        measureTime("粒子渲染", particleRenderStart);
+        // measureTime("粒子渲染", particleRenderStart);
 
-        auto bufferSwapStart = Clock::now();
+        // auto bufferSwapStart = Clock::now();
         // 7. 交换缓冲区和轮询事件
         glfwSwapBuffers(window);
         glfwPollEvents();
-        measureTime("缓冲交换和事件处理", bufferSwapStart);
+        // measureTime("缓冲交换和事件处理", bufferSwapStart);
 
-        measureTime("完整帧", frameStart);
+        // measureTime("完整帧", frameStart);
     }
 
 
