@@ -1,18 +1,17 @@
 #include "ObjLoader.h"
 #include "utils.h"
-#include <tiny_obj_loader.h>
-#include <iostream>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 ObjLoader::~ObjLoader() {
     if (VAO) glDeleteVertexArrays(1, &VAO);
     if (VBO) glDeleteBuffers(1, &VBO);
     if (EBO) glDeleteBuffers(1, &EBO);
+
+    for (const auto& [materialID, textureID] : materialTextures) {
+        glDeleteTextures(1, &textureID);
+    }
 }
 
-bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath) {
+bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath, const char* vertPath, const char* fragPath) {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
@@ -24,33 +23,54 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath)
     }
     if (!warn.empty()) {
         std::cout << "Warning: " << warn << std::endl;
-    } // .mtl没找到这里会报错
+    }
 
-    // Load vertices and indices
-    for (const auto& shape : shapes) {
-        for (const auto& index : shape.mesh.indices) {
-            glm::vec3 vertex(
-                attrib.vertices[3 * index.vertex_index + 0],
-                attrib.vertices[3 * index.vertex_index + 1],
-                attrib.vertices[3 * index.vertex_index + 2]
-            );
-            glm::vec2 texCoord(
-                attrib.texcoords[2 * index.texcoord_index + 0],
-                attrib.texcoords[2 * index.texcoord_index + 1]
-            );
-
-            vertices.insert(vertices.end(), { vertex.x, vertex.y, vertex.z, texCoord.x, texCoord.y });
-            indices.push_back(indices.size());
+    // 加载材质的纹理
+    for (size_t i = 0; i < materials.size(); ++i) {
+        if (!materials[i].diffuse_texname.empty()) {
+            std::string texturePath = mtlBasePath + "/" + materials[i].diffuse_texname;
+            GLuint textureID = loadTexture(texturePath);
+            if (textureID) {
+                materialTextures[i] = textureID; // 保存材质索引和纹理ID的映射
+                std::cout << "Loaded texture for material " << i << ": " << texturePath << std::endl;
+            } else {
+                std::cerr << "Failed to load texture for material " << i << ": " << texturePath << std::endl;
+            }
         }
     }
 
-    // Load texture
-    if (!materials.empty() && !materials[0].diffuse_texname.empty()) {
-        std::string texturePath = mtlBasePath + "/" + materials[0].diffuse_texname;
-        texture = loadTexture(texturePath);
+    // 加载顶点数据
+    for (const auto& shape : shapes) {
+        size_t indexOffset = 0;
+        for (size_t f = 0; f < shape.mesh.num_face_vertices.size(); ++f) {
+            int materialID = shape.mesh.material_ids[f];
+            materialIndices.push_back(materialID);
+
+            int fv = shape.mesh.num_face_vertices[f];
+            for (size_t v = 0; v < fv; ++v) {
+                tinyobj::index_t idx = shape.mesh.indices[indexOffset + v];
+
+                glm::vec3 vertex(
+                    attrib.vertices[3 * idx.vertex_index + 0],
+                    attrib.vertices[3 * idx.vertex_index + 1],
+                    attrib.vertices[3 * idx.vertex_index + 2]
+                );
+                glm::vec2 texCoord(0.0f, 0.0f);
+                if (idx.texcoord_index >= 0) {
+                    texCoord = glm::vec2(
+                        attrib.texcoords[2 * idx.texcoord_index + 0],
+                        attrib.texcoords[2 * idx.texcoord_index + 1]
+                    );
+                }
+
+                vertices.insert(vertices.end(), { vertex.x, vertex.y, vertex.z, texCoord.x, texCoord.y });
+                indices.push_back(indices.size());
+            }
+            indexOffset += fv;
+        }
     }
 
-    // Create VAO, VBO, and EBO
+    // 创建 VAO, VBO, EBO
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -71,7 +91,8 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath)
 
     glBindVertexArray(0);
 
-    shaderProgram = loadShader("../shaders/object.vert", "../shaders/object.frag");
+    shaderProgram = loadShader(vertPath, fragPath);
+
     return true;
 }
 
@@ -102,32 +123,24 @@ GLuint ObjLoader::loadTexture(const std::string& texturePath) {
 }
 
 GLuint ObjLoader::loadShader(const char* vertexPath, const char* fragmentPath) {
-    // 读取顶点着色器源码
     std::string vertexCode = readFile(vertexPath);
     std::string fragmentCode = readFile(fragmentPath);
     const char* vertexShaderSource = vertexCode.c_str();
     const char* fragmentShaderSource = fragmentCode.c_str();
 
-    // 编译顶点着色器
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
     glCompileShader(vertexShader);
-    // checkShaderCompileErrors(vertexShader, "VERTEX");
 
-    // 编译片段着色器
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
     glCompileShader(fragmentShader);
-    // checkShaderCompileErrors(fragmentShader, "FRAGMENT");
 
-    // 链接着色器程序
     GLuint program = glCreateProgram();
     glAttachShader(program, vertexShader);
     glAttachShader(program, fragmentShader);
     glLinkProgram(program);
-    // checkShaderLinkErrors(program);
 
-    // 删除着色器
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
@@ -141,9 +154,22 @@ void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
-    glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+    size_t indexOffset = 0;
+    for (size_t i = 0; i < materialIndices.size(); ++i) {
+        int materialID = materialIndices[i];
+        auto it = materialTextures.find(materialID);
+        if (it != materialTextures.end()) {
+            glBindTexture(GL_TEXTURE_2D, it->second);
+        } else {
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+
+        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (void*)(indexOffset * sizeof(unsigned int)));
+        indexOffset += 3;
+    }
+
     glBindVertexArray(0);
 }
 
@@ -156,7 +182,7 @@ void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projecti
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
     // 设置颜色
-    glUniform1i(glGetUniformLocation(shaderProgram, "useOverrideColor"), GL_TRUE);
+
     glUniform3fv(glGetUniformLocation(shaderProgram, "overrideColor"), 1, glm::value_ptr(color));
     glUniform1f(glGetUniformLocationARB(shaderProgram, "transparency"), transparency);
 

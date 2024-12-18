@@ -3,26 +3,36 @@
 
 #include <string>
 #include <vector>
-#include <glm/glm.hpp>
+#include <iostream>
 #include <GL/glew.h>
+#include <unordered_map>
+#include <tiny_obj_loader.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+
 
 class ObjLoader {
 public:
-    ObjLoader() : VAO(0), VBO(0), EBO(0), texture(0) {}
+    ObjLoader() : VAO(0), VBO(0), EBO(0), shaderProgram(0) {}
     ~ObjLoader();
 
-    bool load(const std::string& objPath, const std::string& mtlBasePath);
+    bool load(const std::string& objPath, const std::string& mtlBasePath, const char* vertPath, const char* fragPath);
     void render(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model);
     void renderWithColor(const glm::mat4& view, const glm::mat4& projection, const glm::mat4& model, const glm::vec3& color, const float transparency);
     GLuint loadTexture(const std::string& texturePath);
 
 private:
-    GLuint VAO, VBO, EBO, texture;
+    GLuint VAO, VBO, EBO;
+    GLuint shaderProgram;
     std::vector<float> vertices;
     std::vector<unsigned int> indices;
-    GLuint shaderProgram;
+    std::vector<int> materialIndices; // 每个面对应的材质索引
+    std::unordered_map<int, GLuint> materialTextures; // 材质索引 -> 纹理ID映射
 
     GLuint loadShader(const char* vertexPath, const char* fragmentPath);
 };
+
 
 #endif

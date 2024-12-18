@@ -1,5 +1,7 @@
 # CG-FinalProject
 
+ ![](https://img.shields.io/badge/platform-linux-brightgreen.svg)
+
 ## 环境配置
 
 ```

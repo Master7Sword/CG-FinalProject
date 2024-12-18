@@ -7,13 +7,13 @@
 #include <glm/gtc/type_ptr.hpp>
 
 void Ground::initialize(const std::string& texturePath) {
-    float groundVertices[] = {
-        // positions          // texture coords
-        -50.0f, -1.0f, -50.0f,  0.0f, 0.0f,
-         50.0f, -1.0f, -50.0f,  100.0f, 0.0f,
-         50.0f, -1.0f,  50.0f,  100.0f, 100.0f,
-        -50.0f, -1.0f,  50.0f,  0.0f, 100.0f
-    };
+float groundVertices[] = {
+    // positions            // texture coords  // normals
+    -50.0f, -1.0f, -50.0f,  0.0f, 0.0f,        0.0f, 1.0f, 0.0f,
+     50.0f, -1.0f, -50.0f,  200.0f, 0.0f,      0.0f, 1.0f, 0.0f,
+     50.0f, -1.0f,  50.0f,  200.0f, 200.0f,    0.0f, 1.0f, 0.0f,
+    -50.0f, -1.0f,  50.0f,  0.0f, 200.0f,      0.0f, 1.0f, 0.0f
+};
     unsigned int indices[] = {
         0, 1, 2,
         2, 3, 0
@@ -32,25 +32,41 @@ void Ground::initialize(const std::string& texturePath) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // 位置
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float))); // 纹理坐标
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float))); // 法向量
+    glEnableVertexAttribArray(2);
 
     groundTexture = loadTexture(texturePath);
     shaderProgram = loadShader("../shaders/ground.vert", "../shaders/ground.frag");
 }
 
-void Ground::render(const glm::mat4& view, const glm::mat4& projection) {
+void Ground::render(const glm::mat4& view, const glm::mat4& projection, std::vector<Light> lights, Light env_light) {
+    lights.push_back(env_light); 
+
     glUseProgram(shaderProgram);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, groundTexture);
-    
+
     glm::mat4 model = glm::mat4(1.0f);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    
+
+    // 传递光源信息
+    int numLights = lights.size();
+    glUniform1i(glGetUniformLocation(shaderProgram, "numLights"), numLights);
+    for (int i = 0; i < numLights; ++i) {
+        std::string base = "lights[" + std::to_string(i) + "]";
+        glUniform3fv(glGetUniformLocation(shaderProgram, (base + ".position").c_str()), 1, glm::value_ptr(lights[i].position));
+        glUniform3fv(glGetUniformLocation(shaderProgram, (base + ".color").c_str()), 1, glm::value_ptr(lights[i].color));
+        glUniform1f(glGetUniformLocation(shaderProgram, (base + ".intensity").c_str()), lights[i].intensity);
+    }
+
+    glUniform3fv(glGetUniformLocation(shaderProgram, "viewPos"), 1, glm::value_ptr(Camera::position));
+
     glBindVertexArray(groundVAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

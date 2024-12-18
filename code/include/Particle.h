@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <iostream>
+#include "Light.h"
 
 
 class Particle {
@@ -12,7 +13,7 @@ public:
                     const glm::vec3& color, float transparency, float ttl, bool is_boomed, bool is_tail,
                     const glm::vec3& acceleration);
     
-    void update(float deltaTime, std::vector<Particle>& particles);
+    void update(float deltaTime, std::vector<Particle>& particles, std::vector<Light>& lights);
     
     bool check_recycle() const;
     
@@ -36,6 +37,6 @@ private:
 };
 
 
-void updateParticles(float deltaTime, std::vector<Particle>& particles);
+void updateParticles(float deltaTime, std::vector<Particle>& particles, std::vector<Light>& lights);
 
 #endif

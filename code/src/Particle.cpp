@@ -17,7 +17,7 @@ void Particle::initialize(const glm::vec3& position, const glm::vec3& direction,
 }
 
 
-void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
+void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std::vector<Light>& lights) {
     // 在原地添加一个粒子实现拖尾
     if(!is_tail){
         Particle tail;
@@ -34,8 +34,18 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
             if (v.y < 0.5f) {
                 explosionSound[explosion_index].play();
                 explosion_index = (explosion_index + 1) % MAX_SOUNDS;
+
                 is_boomed = true;
                 this->recycle = true;
+
+                Light explosionLight;
+                explosionLight.position = loc;
+                explosionLight.color = color;
+                explosionLight.intensity = 0.2f; // 初始强度
+                explosionLight.ttl = 1.0f;       // 持续时间（秒）
+                lights.push_back(explosionLight);
+
+                #pragma omp parallel for 
                 for (int i = 0; i < 200; ++i) {
                     glm::vec3 dir = glm::normalize(glm::vec3(
                         (rand() % 200 - 100) / 100.0f, 
@@ -68,19 +78,25 @@ bool Particle::check_recycle() const {
     return ttl <= 0.0f || recycle == true || transparency <= 0.0f;
 }
 
-void updateParticles(float deltaTime, std::vector<Particle>& particles) {
+void updateParticles(float deltaTime, std::vector<Particle>& particles, std::vector<Light>& lights) {
     std::vector<Particle> newParticles;  // 用来存储新生成的粒子
 
     // 更新每个粒子的状态
+    #pragma omp parallel for 
     for (auto& particle : particles) {
-        particle.update(deltaTime, newParticles);  // 将新生成的粒子存入 newParticles
+        particle.update(deltaTime, newParticles, lights);  // 新生成的粒子存入 newParticles，后续拷回 particles
     }
-
-    // 将新生成的粒子添加到 particles
     particles.insert(particles.end(), newParticles.begin(), newParticles.end());
-
-    // 删除TTL过期的粒子
     particles.erase(std::remove_if(particles.begin(), particles.end(), 
                                    [](const Particle& p) { return p.check_recycle(); }), 
                     particles.end());
+
+    // 更新光源的状态
+    for (auto& light : lights) {
+        light.ttl -= deltaTime;
+        light.intensity = std::max(0.0f, light.intensity - deltaTime * 0.1f); // 强度衰减速度
+    }
+    lights.erase(std::remove_if(lights.begin(), lights.end(),
+                                [](const Light& light) { return light.intensity <= 0.0f || light.ttl <= 0.0f; }),
+                 lights.end());
 }

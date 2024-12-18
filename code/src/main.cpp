@@ -1,18 +1,19 @@
 #include <iostream>
-#include <SFML/Audio.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include <algorithm>
+#include <SFML/Audio.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
-#include "Particle.h"
-#include "ParticleRenderer.h"
-#include "ObjLoader.h"
+#include "utils.h"
+#include "Light.h"
+#include "Camera.h"
 #include "Skybox.h"
 #include "Ground.h"
-#include "Camera.h"
-#include "utils.h"
+#include "ObjLoader.h"
+#include "Particle.h"
+#include "ParticleRenderer.h"
 
 
 // 处理按键输入
@@ -60,8 +61,8 @@ void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& pa
 
             Particle test;
 
-            test.initialize(glm::vec3(0.0f, -15.0f, -50.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 13.0f, 0.0f), 
-                            glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 100.0f, false, false, glm::vec3(0.0f,-0.981f, 0.0f));
+            test.initialize(glm::vec3(0.0f, -5.0f, -30.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 12.0f, 0.0f), 
+                            glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 100.0f, false, false, glm::vec3(0.0f,-0.981f, 0.0f));
             particles.push_back(test);
             
         }
@@ -70,6 +71,10 @@ void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& pa
         enterKeyPressed = false;
     }
 }
+
+
+std::vector<Light> lights = {}; // 烟花产生的光源，动态调整
+Light env_light = {{0.0f, 10000.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, 0.5f, 114514.1919810f}; // 预设月光，每次渲染时加入lights中
 
 std::vector<Particle> particles; // 存储所有粒子
 
@@ -115,16 +120,19 @@ int main() {
         explosionSound[i].setBuffer(explosionBuffer[i]);
     }
     
-
-    // 渲染对象
+    // 静态对象
     Skybox skybox;
     skybox.initialize();
 
     Ground ground;
     ground.initialize("../../static/ground_textures/ground_stone.png");
 
-    ObjLoader objLoader;
-    if (!objLoader.load("../../static/objects/Crate.obj", "../../static/objects")) {
+    ObjLoader crate;
+    if (!crate.load("../../static/objects/Crate.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+        return -1;
+    }
+    ObjLoader maple;
+    if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
         return -1;
     }
 
@@ -155,15 +163,16 @@ int main() {
         // 4. 渲染固定物体
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
-        glm::mat4 model = glm::mat4(1.0f); 
+        glm::mat4 model = glm::mat4(0.1f); 
         skybox.render(view, projection);
-        ground.render(view, projection);
-        objLoader.render(view, projection, model);
+        ground.render(view, projection, lights, env_light);
+        crate.render(view, projection, model);
+        maple.render(view, projection, model);
         measureTime("固定物体渲染", renderStart);
 
         // auto particleUpdateStart = Clock::now();
         // 5. 更新粒子
-        updateParticles(deltaTime, particles);
+        updateParticles(deltaTime, particles, lights);
         // measureTime("粒子更新", particleUpdateStart);
 
         // auto particleRenderStart = Clock::now();

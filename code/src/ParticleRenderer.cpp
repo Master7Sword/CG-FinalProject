@@ -73,7 +73,7 @@ void ParticleRenderer::initialize() {
 
     glBindVertexArray(0);
 
-    sphereModel.load("../../static/objects/sphere(r=0.5).obj", "../../static/objects");
+    sphereModel.load("../../static/objects/sphere(r=0.1).obj", "../../static/objects", "../shaders/particle.vert", "../shaders/particle.frag");
 
     // 启用混合模式
     glEnable(GL_BLEND);
@@ -85,7 +85,7 @@ void ParticleRenderer::initialize() {
 void ParticleRenderer::render(const std::vector<Particle>& particles, const glm::mat4& view, const glm::mat4& projection) {
     for (const auto& particle : particles) {
         glm::mat4 model = glm::translate(glm::mat4(1.0f), particle.getPosition());
-        model = glm::scale(model, glm::vec3(0.1f)); 
+        model = glm::scale(model, glm::vec3(0.5f)); 
 
         sphereModel.renderWithColor(view, projection, model, particle.getColor(),  particle.getTransparency());
     }

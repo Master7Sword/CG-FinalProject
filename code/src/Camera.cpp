@@ -14,6 +14,7 @@ glm::mat4 Camera::getViewMatrix() {
 
 void Camera::move(const glm::vec3& offset) {
     position += offset;
+    position = glm::vec3(position.x, glm::max(-0.75f, position.y), position.z);
 }
 
 void Camera::adjustYaw(float offset) {
