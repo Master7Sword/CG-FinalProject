@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(SOURCES
     src/main.cpp
     src/Skybox.cpp
+    src/Ground.cpp
     src/Camera.cpp
     src/utils.cpp
     src/ObjLoader.cpp

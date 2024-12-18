@@ -43,8 +43,8 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles) {
                         (rand() % 200 - 100) / 100.0f
                     ));
                     glm::vec3 velocity = dir * 4.0f;
-                    glm::vec3 color = getRandomColor();
-                    // glm::vec3 color = glm::vec3(255.0f/255.0f, 99.0f/255.0f, 71.0f/255.0f);
+                    // glm::vec3 color = getRandomColor();
+                    glm::vec3 color = glm::vec3(255.0f/255.0f, 99.0f/255.0f, 71.0f/255.0f);
                     Particle p;
                     p.initialize(loc, dir, velocity, color, 1.0f, 5.0f, true, false, glm::vec3(0.0f,-0.981f, 0.0f));
                     newParticles.push_back(p);

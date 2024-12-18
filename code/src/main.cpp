@@ -10,6 +10,7 @@
 #include "ParticleRenderer.h"
 #include "ObjLoader.h"
 #include "Skybox.h"
+#include "Ground.h"
 #include "Camera.h"
 #include "utils.h"
 
@@ -119,6 +120,9 @@ int main() {
     Skybox skybox;
     skybox.initialize();
 
+    Ground ground;
+    ground.initialize("../../static/ground_textures/ground_stone.png");
+
     ObjLoader objLoader;
     if (!objLoader.load("../../static/objects/Crate.obj", "../../static/objects")) {
         return -1;
@@ -147,14 +151,15 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // measureTime("清屏", clearStart);
 
-        // auto renderStart = Clock::now();
+        auto renderStart = Clock::now();
         // 4. 渲染固定物体
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
         glm::mat4 model = glm::mat4(1.0f); 
         skybox.render(view, projection);
+        ground.render(view, projection);
         objLoader.render(view, projection, model);
-        // measureTime("固定物体渲染", renderStart);
+        measureTime("固定物体渲染", renderStart);
 
         // auto particleUpdateStart = Clock::now();
         // 5. 更新粒子
