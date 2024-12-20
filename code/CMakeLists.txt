@@ -8,6 +8,9 @@ project(Skybox_Project)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# 打开 openmp 编译指令
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
+
 # 添加源文件
 set(SOURCES
     src/main.cpp
