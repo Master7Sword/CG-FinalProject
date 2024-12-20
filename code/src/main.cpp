@@ -127,14 +127,15 @@ int main() {
     Ground ground;
     ground.initialize("../../static/ground_textures/ground_stone.png");
 
-    ObjLoader crate;
-    if (!crate.load("../../static/objects/Crate.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    ObjLoader yomiya;
+    if (!yomiya.load("../../static/objects/yomiya.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
         return -1;
     }
-    ObjLoader maple;
-    if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
-        return -1;
-    }
+    // ObjLoader maple;
+    // if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    //     return -1;
+    // }
+    
 
     ParticleRenderer particleRenderer;
     particleRenderer.initialize();
@@ -166,8 +167,8 @@ int main() {
         glm::mat4 model = glm::mat4(0.1f); 
         skybox.render(view, projection);
         ground.render(view, projection, lights, env_light);
-        crate.render(view, projection, model);
-        maple.render(view, projection, model);
+        yomiya.render(view, projection, model);
+        // maple.render(view, projection, model);
         measureTime("固定物体渲染", renderStart);
 
         // auto particleUpdateStart = Clock::now();

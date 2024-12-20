@@ -42,7 +42,7 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                 explosionLight.position = loc;
                 explosionLight.color = color;
                 explosionLight.intensity = 0.2f; // 初始强度
-                explosionLight.ttl = 1.0f;       // 持续时间（秒）
+                explosionLight.ttl = 2.0f;       // 持续时间（秒）
                 lights.push_back(explosionLight);
 
                 #pragma omp parallel for 
