@@ -16,13 +16,6 @@ make
 ./Skybox_Project
 ```
 
-## 运行
-
-```
-cd CG-FinalProject/code
-make run
-```
-
 ## 常见问题
 
 1. 如果运行出现报错：
