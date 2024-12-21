@@ -127,14 +127,14 @@ int main() {
     Ground ground;
     ground.initialize("../../static/ground_textures/ground_stone.png");
 
-    ObjLoader yomiya;
-    if (!yomiya.load("../../static/objects/yomiya.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
-        return -1;
-    }
-    // ObjLoader maple;
-    // if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    // ObjLoader shrine;
+    // if (!shrine.load("../../static/objects/shrine.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
     //     return -1;
     // }
+    ObjLoader maple;
+    if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+        return -1;
+    }
     
 
     ParticleRenderer particleRenderer;
@@ -164,11 +164,11 @@ int main() {
         // 4. 渲染固定物体
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
-        glm::mat4 model = glm::mat4(0.1f); 
+        glm::mat4 model = glm::mat4(0.0000001f); 
         skybox.render(view, projection);
         ground.render(view, projection, lights, env_light);
-        yomiya.render(view, projection, model);
-        // maple.render(view, projection, model);
+        // shrine.render(view, projection, model);
+        maple.render(view, projection, model);
         measureTime("固定物体渲染", renderStart);
 
         // auto particleUpdateStart = Clock::now();

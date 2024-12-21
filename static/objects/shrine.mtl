@@ -11,86 +11,6 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-newmtl Material.001
-Ns 360.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl Material.003
-Ns 360.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl Material.004
-Ns 360.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl Material.009
-Ns 360.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl mat_3.001
-Ns 360.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl mat_37.002
-Ns 360.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl mat_4.002
-Ns 360.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-
-newmtl mat_5.002
-Ns 360.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-
 newmtl 材質1
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -98,10 +18,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0002.png
-map_refl C:/Tex_0002_M.png
-map_d C:/Tex_0002.png
-map_Bump -bm 1.000000 C:/Tex_0002_N.png
+map_Kd textures/Tex_0002.png
+map_refl textures/Tex_0002_M.png
+map_d textures/Tex_0002.png
+map_Bump -bm 1.000000 textures/Tex_0002_N.png
 
 newmtl 材質10
 Ns 250.000000
@@ -110,10 +30,10 @@ Ks 0.030000 0.030000 0.030000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0012.png
-map_refl C:/Tex_0012_M.png
-map_d C:/Tex_0012.png
-map_Bump -bm 4.500000 C:/Tex_0012_N.png
+map_Kd textures/Tex_0012.png
+map_refl textures/Tex_0012_M.png
+map_d textures/Tex_0012.png
+map_Bump -bm 4.500000 textures/Tex_0012_N.png
 
 newmtl 材質11
 Ns 250.000000
@@ -122,10 +42,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0013.png
-map_refl C:/Tex_0013_M.png
-map_d C:/Tex_0013.png
-map_Bump -bm 1.000000 C:/Tex_0013_N.png
+map_Kd textures/Tex_0013.png
+map_refl textures/Tex_0013_M.png
+map_d textures/Tex_0013.png
+map_Bump -bm 1.000000 textures/Tex_0013_N.png
 
 newmtl 材質12
 Ns 250.000000
@@ -134,10 +54,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0014.png
-map_refl C:/Tex_0014_M.png
-map_d C:/Tex_0014.png
-map_Bump -bm 1.000000 C:/Tex_0014_N.png
+map_Kd textures/Tex_0014.png
+map_refl textures/Tex_0014_M.png
+map_d textures/Tex_0014.png
+map_Bump -bm 1.000000 textures/Tex_0014_N.png
 
 newmtl 材質13
 Ns 250.000000
@@ -146,9 +66,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0015.png
-map_d C:/Tex_0015.png
-map_Bump -bm 1.000000 C:/Tex_0015_N.png
+map_Kd textures/Tex_0015.png
+map_d textures/Tex_0015.png
+map_Bump -bm 1.000000 textures/Tex_0015_N.png
 
 newmtl 材質14
 Ns 201.339569
@@ -167,10 +87,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0018.png
-map_refl C:/Tex_0018_M.png
-map_d C:/Tex_0018.png
-map_Bump -bm 1.000000 C:/Tex_0018_N.png
+map_Kd textures/Tex_0018.png
+map_refl textures/Tex_0018_M.png
+map_d textures/Tex_0018.png
+map_Bump -bm 1.000000 textures/Tex_0018_N.png
 
 newmtl 材質16
 Ns 1000.000000
@@ -178,10 +98,10 @@ Ka 1.000000 1.000000 1.000000
 Ks 0.163636 0.163636 0.163636
 Ni 1.777000
 illum 2
-map_Kd C:/Tex_0019.png
-map_Ke C:/Tex_0019.png
-map_d C:/Tex_0019.png
-map_Bump -bm 1.000000 C:/Tex_0019_N.png
+map_Kd textures/Tex_0019.png
+map_Ke textures/Tex_0019.png
+map_d textures/Tex_0019.png
+map_Bump -bm 1.000000 textures/Tex_0019_N.png
 
 newmtl 材質18
 Ns 250.000000
@@ -190,10 +110,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0021.png
-map_refl C:/Tex_0021_M.png
-map_d C:/Tex_0021.png
-map_Bump -bm 1.000000 C:/Tex_0021_N.png
+map_Kd textures/Tex_0021.png
+map_refl textures/Tex_0021_M.png
+map_d textures/Tex_0021.png
+map_Bump -bm 1.000000 textures/Tex_0021_N.png
 
 newmtl 材質19
 Ka 1.000000 1.000000 1.000000
@@ -201,10 +121,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0025.png
-map_Ns C:/Tex_0025_G.png
-map_d C:/Tex_0025.png
-map_Bump -bm 1.000000 C:/Tex_0025_N.png
+map_Kd textures/Tex_0025.png
+map_Ns textures/Tex_0025_G.png
+map_d textures/Tex_0025.png
+map_Bump -bm 1.000000 textures/Tex_0025_N.png
 
 newmtl 材質2
 Ns 250.000000
@@ -213,10 +133,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0003.png
-map_refl C:/Tex_0003_M.png
-map_d C:/Tex_0003.png
-map_Bump -bm 1.000000 C:/Tex_0003_N.png
+map_Kd textures/Tex_0003.png
+map_refl textures/Tex_0003_M.png
+map_d textures/Tex_0003.png
+map_Bump -bm 1.000000 textures/Tex_0003_N.png
 
 newmtl 材質20
 Ns 0.000000
@@ -226,7 +146,7 @@ Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.470000
 illum 1
-map_d C:/Tex_0024_E.png
+map_d textures/Tex_0024_E.png
 
 newmtl 材質21
 Ns 250.000000
@@ -235,9 +155,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0026.png
-map_d C:/Tex_0026.png
-map_Bump -bm 1.000000 C:/Tex_0026_N.png
+map_Kd textures/Tex_0026.png
+map_d textures/Tex_0026.png
+map_Bump -bm 1.000000 textures/Tex_0026_N.png
 
 newmtl 材質22
 Ns 250.000000
@@ -246,9 +166,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0027.png
-map_d C:/Tex_0027.png
-map_Bump -bm 1.000000 C:/Tex_0027_N.png
+map_Kd textures/Tex_0027.png
+map_d textures/Tex_0027.png
+map_Bump -bm 1.000000 textures/Tex_0027_N.png
 
 newmtl 材質23
 Ns 250.000000
@@ -257,9 +177,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0028.png
-map_d C:/Tex_0028.png
-map_Bump -bm 1.000000 C:/Tex_0028_N.png
+map_Kd textures/Tex_0028.png
+map_d textures/Tex_0028.png
+map_Bump -bm 1.000000 textures/Tex_0028_N.png
 
 newmtl 材質24
 Ns 250.000000
@@ -268,9 +188,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0029.png
-map_d C:/Tex_0029.png
-map_Bump -bm 1.000000 C:/Tex_0029_N.png
+map_Kd textures/Tex_0029.png
+map_d textures/Tex_0029.png
+map_Bump -bm 1.000000 textures/Tex_0029_N.png
 
 newmtl 材質25
 Ns 250.000000
@@ -279,9 +199,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0030.png
-map_d C:/Tex_0030.png
-map_Bump -bm 1.000000 C:/Tex_0030_N.png
+map_Kd textures/Tex_0030.png
+map_d textures/Tex_0030.png
+map_Bump -bm 1.000000 textures/Tex_0030_N.png
 
 newmtl 材質26
 Ns 250.000000
@@ -290,9 +210,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0031.png
-map_d C:/Tex_0031.png
-map_Bump -bm 1.000000 C:/Tex_0031_N.png
+map_Kd textures/Tex_0031.png
+map_d textures/Tex_0031.png
+map_Bump -bm 1.000000 textures/Tex_0031_N.png
 
 newmtl 材質27
 Ns 250.000000
@@ -301,9 +221,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0032.png
-map_d C:/Tex_0032.png
-map_Bump -bm 1.000000 C:/Tex_0032_N.png
+map_Kd textures/Tex_0032.png
+map_d textures/Tex_0032.png
+map_Bump -bm 1.000000 textures/Tex_0032_N.png
 
 newmtl 材質28
 Ns 250.000000
@@ -311,10 +231,10 @@ Ka 1.000000 1.000000 1.000000
 Ks 0.063636 0.063636 0.063636
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0033.png
-map_Ke C:/Tex_0033.png
-map_d C:/Tex_0033.png
-map_Bump -bm 1.000000 C:/Tex_0033_N.png
+map_Kd textures/Tex_0033.png
+map_Ke textures/Tex_0033.png
+map_d textures/Tex_0033.png
+map_Bump -bm 1.000000 textures/Tex_0033_N.png
 
 newmtl 材質29
 Ns 250.000000
@@ -323,9 +243,9 @@ Ks 0.003000 0.003000 0.003000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0034.png
-map_d C:/Tex_0034.png
-map_Bump -bm 4.000000 C:/Tex_0034_N.png
+map_Kd textures/Tex_0034.png
+map_d textures/Tex_0034.png
+map_Bump -bm 4.000000 textures/Tex_0034_N.png
 
 newmtl 材質3
 Ns 250.000000
@@ -334,10 +254,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0004.png
-map_refl C:/Tex_0004_M.png
-map_d C:/Tex_0004.png
-map_Bump -bm 1.000000 C:/Tex_0004_N.png
+map_Kd textures/Tex_0004.png
+map_refl textures/Tex_0004_M.png
+map_d textures/Tex_0004.png
+map_Bump -bm 1.000000 textures/Tex_0004_N.png
 
 newmtl 材質30
 Ns 250.000000
@@ -346,9 +266,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0035.png
-map_d C:/Tex_0035.png
-map_Bump -bm 1.000000 C:/Tex_0035_N.png
+map_Kd textures/Tex_0035.png
+map_d textures/Tex_0035.png
+map_Bump -bm 1.000000 textures/Tex_0035_N.png
 
 newmtl 材質31
 Ns 0.000000
@@ -358,7 +278,7 @@ Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 1
-map_d C:/Tex_0038_3.tga
+map_d textures/Tex_0038_3.tga
 
 newmtl 材質32
 Ns 250.000000
@@ -367,10 +287,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0040.png
-map_refl C:/Tex_0040_M.png
-map_d C:/Tex_0040.png
-map_Bump -bm 1.000000 C:/Tex_0040_N.png
+map_Kd textures/Tex_0040.png
+map_refl textures/Tex_0040_M.png
+map_d textures/Tex_0040.png
+map_Bump -bm 1.000000 textures/Tex_0040_N.png
 
 newmtl 材質34
 Ns 250.000000
@@ -379,10 +299,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0017.png
-map_refl C:/Tex_0017_M.png
-map_d C:/Tex_0017.png
-map_Bump -bm 1.000000 C:/Tex_0017_N.png
+map_Kd textures/Tex_0017.png
+map_refl textures/Tex_0017_M.png
+map_d textures/Tex_0017.png
+map_Bump -bm 1.000000 textures/Tex_0017_N.png
 
 newmtl 材質35
 Ns 0.000000
@@ -391,8 +311,8 @@ Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 1
-map_Ke C:/Tex_0001.png
-map_d C:/Tex_0001.png
+map_Ke textures/Tex_0001.png
+map_d textures/Tex_0001.png
 
 newmtl 材質36
 Ns 201.339569
@@ -411,10 +331,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0023.png
-map_refl C:/Tex_0023_M.png
-map_d C:/Tex_0023.png
-map_Bump -bm 1.000000 C:/Tex_0023_N.png
+map_Kd textures/Tex_0023.png
+map_refl textures/Tex_0023_M.png
+map_d textures/Tex_0023.png
+map_Bump -bm 1.000000 textures/Tex_0023_N.png
 
 newmtl 材質38
 Ns 250.000000
@@ -423,9 +343,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0022.png
-map_d C:/Tex_0022.png
-map_Bump -bm 1.000000 C:/Tex_0022_N.png
+map_Kd textures/Tex_0022.png
+map_d textures/Tex_0022.png
+map_Bump -bm 1.000000 textures/Tex_0022_N.png
 
 newmtl 材質39
 Ns 250.000000
@@ -434,8 +354,8 @@ Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 1
-map_Kd C:/Tex_0037_3.tga
-map_d C:/Tex_0037_3.tga
+map_Kd textures/Tex_0037_3.tga
+map_d textures/Tex_0037_3.tga
 
 newmtl 材質4
 Ns 1000.000000
@@ -444,10 +364,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0005.png
-map_refl C:/Tex_0005_M.png
-map_d C:/Tex_0005.png
-map_Bump -bm 1.000000 C:/Tex_0005_N.png
+map_Kd textures/Tex_0005.png
+map_refl textures/Tex_0005_M.png
+map_d textures/Tex_0005.png
+map_Bump -bm 1.000000 textures/Tex_0005_N.png
 
 newmtl 材質40
 Ns 250.000000
@@ -456,8 +376,8 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0039.png
-map_d C:/Tex_0039.png
+map_Kd textures/Tex_0039.png
+map_d textures/Tex_0039.png
 
 newmtl 材質5
 Ns 250.000000
@@ -466,10 +386,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0007.png
-map_refl C:/Tex_0007_M.png
-map_d C:/Tex_0007.png
-map_Bump -bm 1.000000 C:/Tex_0007_N.png
+map_Kd textures/Tex_0007.png
+map_refl textures/Tex_0007_M.png
+map_d textures/Tex_0007.png
+map_Bump -bm 1.000000 textures/Tex_0007_N.png
 
 newmtl 材質6
 Ns 250.000000
@@ -478,10 +398,10 @@ Ks 0.001000 0.001000 0.001000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0008.png
-map_refl C:/Tex_0008_M.png
-map_d C:/Tex_0008.png
-map_Bump -bm 4.500000 C:/Tex_0008_N.png
+map_Kd textures/Tex_0008.png
+map_refl textures/Tex_0008_M.png
+map_d textures/Tex_0008.png
+map_Bump -bm 4.500000 textures/Tex_0008_N.png
 
 newmtl 材質7
 Ns 250.000000
@@ -490,10 +410,10 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0009.png
-map_refl C:/Tex_0009_M.png
-map_d C:/Tex_0009.png
-map_Bump -bm 1.000000 C:/Tex_0009_N.png
+map_Kd textures/Tex_0009.png
+map_refl textures/Tex_0009_M.png
+map_d textures/Tex_0009.png
+map_Bump -bm 1.000000 textures/Tex_0009_N.png
 
 newmtl 材質8
 Ns 250.000000
@@ -502,9 +422,9 @@ Ks 0.100000 0.100000 0.100000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0010.png
-map_d C:/Tex_0010.png
-map_Bump -bm 1.000000 C:/Tex_0010_N.png
+map_Kd textures/Tex_0010.png
+map_d textures/Tex_0010.png
+map_Bump -bm 1.000000 textures/Tex_0010_N.png
 
 newmtl 材質9
 Ns 250.000000
@@ -513,10 +433,10 @@ Ks 0.085000 0.085000 0.085000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
-map_Kd C:/Tex_0011.png
-map_refl C:/Tex_0011_M.png
-map_d C:/Tex_0011.png
-map_Bump -bm 1.000000 C:/Tex_0011_N.png
+map_Kd textures/Tex_0011.png
+map_refl textures/Tex_0011_M.png
+map_d textures/Tex_0011.png
+map_Bump -bm 1.000000 textures/Tex_0011_N.png
 
 newmtl 风格化水
 Ns 250.000000
@@ -527,4 +447,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 0.000000
 d 0.200000
 illum 9
-map_Bump -s 5 5 1 -bm 1.000000 C:/Eff_Water_LargeWaves_Normal.png
+map_Bump -s 5 5 1 -bm 1.000000 textures/Eff_Water_LargeWaves_Normal.png

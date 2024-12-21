@@ -45,7 +45,6 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                 explosionLight.ttl = 2.0f;       // 持续时间（秒）
                 lights.push_back(explosionLight);
 
-                #pragma omp parallel for 
                 for (int i = 0; i < 200; ++i) {
                     glm::vec3 dir = glm::normalize(glm::vec3(
                         (rand() % 200 - 100) / 100.0f, 
@@ -53,8 +52,8 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                         (rand() % 200 - 100) / 100.0f
                     ));
                     glm::vec3 velocity = dir * 4.0f;
-                    // glm::vec3 color = getRandomColor();
-                    glm::vec3 color = glm::vec3(255.0f/255.0f, 99.0f/255.0f, 71.0f/255.0f);
+                    glm::vec3 color = getRandomColor();
+                    // glm::vec3 color = glm::vec3(255.0f/255.0f, 99.0f/255.0f, 71.0f/255.0f);
                     Particle p;
                     p.initialize(loc, dir, velocity, color, 1.0f, 5.0f, true, false, glm::vec3(0.0f,-0.981f, 0.0f));
                     newParticles.push_back(p);
@@ -82,7 +81,6 @@ void updateParticles(float deltaTime, std::vector<Particle>& particles, std::vec
     std::vector<Particle> newParticles;  // 用来存储新生成的粒子
 
     // 更新每个粒子的状态
-    #pragma omp parallel for 
     for (auto& particle : particles) {
         particle.update(deltaTime, newParticles, lights);  // 新生成的粒子存入 newParticles，后续拷回 particles
     }
