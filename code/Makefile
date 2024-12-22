@@ -5,7 +5,7 @@ build:
 	cmake -S . -B build
 
 run: all
-	./build/Skybox_Project
+	cd build && ./Skybox_Project
 
 clean:
 	rm -rf build/

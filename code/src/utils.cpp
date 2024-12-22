@@ -98,8 +98,11 @@ glm::vec3 getRandomColor() {
 }
 
 
-void measureTime(const std::string &stageName, const Clock::time_point &start) {
+std::string measureTime(const std::string &stageName, const Clock::time_point &start) {
     auto end = Clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-    std::cout << stageName << "耗时: " << duration << " 微秒" << std::endl;
+    char buffer[64];
+    snprintf(buffer, sizeof(buffer), "%16s : %8.3lf ms\n", stageName.c_str(), double(duration / 1000.0));
+    std::string res(buffer);
+    return res;
 }
