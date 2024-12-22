@@ -30,6 +30,7 @@ private:
     std::vector<unsigned int> indices;
     std::vector<int> materialIndices; // 每个面对应的材质索引
     std::unordered_map<int, GLuint> materialTextures; // 材质索引 -> 纹理ID映射
+    std::vector<GLuint> textureRenderList;
 
     GLuint loadShader(const char* vertexPath, const char* fragmentPath);
 };

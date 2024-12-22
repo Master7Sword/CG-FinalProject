@@ -1,3 +1,6 @@
+#include <thread>
+#include <mutex>
+
 #include "ObjLoader.h"
 #include "utils.h"
 
@@ -26,6 +29,7 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath,
     }
 
     // 加载材质的纹理
+    // #pragma omp parallel for
     for (size_t i = 0; i < materials.size(); ++i) {
         if (!materials[i].diffuse_texname.empty()) {
             std::string texturePath = mtlBasePath + "/" + materials[i].diffuse_texname;
@@ -40,6 +44,7 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath,
     }
 
     // 加载顶点数据
+    // #pragma omp parallel for
     for (const auto& shape : shapes) {
         size_t indexOffset = 0;
         for (size_t f = 0; f < shape.mesh.num_face_vertices.size(); ++f) {
@@ -67,6 +72,16 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath,
                 indices.push_back(indices.size());
             }
             indexOffset += fv;
+        }
+    }
+
+    for (size_t i = 0; i < materialIndices.size(); ++i) {
+        int materialID = materialIndices[i];
+        auto it = materialTextures.find(materialID);
+        if (it != materialTextures.end()) {
+            textureRenderList.push_back(it->second);
+        } else {
+            textureRenderList.push_back(0);
         }
     }
 
@@ -156,18 +171,9 @@ void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const
 
     glBindVertexArray(VAO);
 
-    size_t indexOffset = 0;
-    for (size_t i = 0; i < materialIndices.size(); ++i) {
-        int materialID = materialIndices[i];
-        auto it = materialTextures.find(materialID);
-        if (it != materialTextures.end()) {
-            glBindTexture(GL_TEXTURE_2D, it->second);
-        } else {
-            glBindTexture(GL_TEXTURE_2D, 0);
-        }
-
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (void*)(indexOffset * sizeof(unsigned int)));
-        indexOffset += 3;
+    for (size_t idx = 0;idx < textureRenderList.size();idx ++) {
+        glBindTexture(GL_TEXTURE_2D, textureRenderList[idx]);
+        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (void*)(idx * 3 * sizeof(unsigned int)));
     }
 
     glBindVertexArray(0);
