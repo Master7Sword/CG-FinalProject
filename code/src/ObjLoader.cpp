@@ -50,11 +50,11 @@ bool ObjLoader::load(const std::string &objPath, const std::string &materialRoot
             if (textureID)
             {
                 materialToTextureMap[i] = textureID; // 保存材质索引和纹理ID的映射
-                std::cout << "Loaded texture for material " << i << "at " << texturePath << std::endl;
+                std::cout << "Loaded texture for material " << i << " at " << texturePath << std::endl;
             }
             else
             {
-                std::cerr << "Failed to load texture for material " << i << "at " << texturePath << std::endl;
+                std::cerr << "Failed to load texture for material " << i << " at " << texturePath << std::endl;
             }
         }
     }
@@ -88,7 +88,7 @@ bool ObjLoader::load(const std::string &objPath, const std::string &materialRoot
                 }
 
                 vertices.insert(vertices.end(), {vertexCoord.x, vertexCoord.y, vertexCoord.z, texCoord.x, texCoord.y});
-                indices.push_back(i);
+                indices.push_back(indices.size());
             }
             indexOffset += vertexNum;
         }
@@ -114,16 +114,16 @@ bool ObjLoader::load(const std::string &objPath, const std::string &materialRoot
             if (idx - batchStartIdx > 0)
             {
                 // 将上一批次的顶点数据加入渲染列表，每个顶点3个元素
-                textureRenderList.push_back(ObjectRenderMetaData{lastTextureID, (GLsizei)((idx - batchStartIdx) * 3), (size_t)(batchStartIdx * 3)}); // 每个顶点3个元素
+                textureRenderList.push_back(ObjectRenderMetaData{lastTextureID, GLsizei(idx - batchStartIdx) * 3, batchStartIdx * 3}); // 每个顶点3个元素
             }
             batchStartIdx = idx;
             lastTextureID = currentTextureID;
         }
     }
     // 处理最后一批次
-    if (vertexNum - batchStartIdx > 0)
+    if (vertexNum - 1 - batchStartIdx > 0)
     {
-        textureRenderList.push_back(ObjectRenderMetaData{lastTextureID, (GLsizei)((vertexNum - batchStartIdx) * 3), (size_t)(batchStartIdx * 3)});
+        textureRenderList.push_back(ObjectRenderMetaData{lastTextureID, GLsizei(vertexNum - 1 - batchStartIdx) * 3, batchStartIdx * 3});
     }
 
     // 创建VAO、VBO、EBO对象
