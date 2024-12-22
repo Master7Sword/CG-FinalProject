@@ -56,7 +56,7 @@ void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& pa
             // 仅在按下时触发一次
             enterKeyPressed = true; // 标记为已按下
 
-            // launchSound[launch_index].play(); // 发射音效
+            launchSound[launch_index].play(); // 发射音效
             launch_index = (launch_index + 1) % MAX_SOUNDS;
 
             Particle test;
@@ -107,18 +107,18 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     // 初始化音效
-    // for (int i = 0; i < MAX_SOUNDS; ++i){
-    //     if (!launchBuffer[i].loadFromFile("../../static/audio/launch.wav")) {
-    //         std::cerr << "Failed to load launch.wav" << std::endl;
-    //         return -1;
-    //     }
-    //     launchSound[i].setBuffer(launchBuffer[i]);
-    //     if (!explosionBuffer[i].loadFromFile("../../static/audio/explosion.wav")) {
-    //         std::cerr << "Failed to load explosion sound!" << std::endl;
-    //         return -1;
-    //     }
-    //     explosionSound[i].setBuffer(explosionBuffer[i]);
-    // }
+    for (int i = 0; i < MAX_SOUNDS; ++i){
+        if (!launchBuffer[i].loadFromFile("../../static/audio/launch.wav")) {
+            std::cerr << "Failed to load launch.wav" << std::endl;
+            return -1;
+        }
+        launchSound[i].setBuffer(launchBuffer[i]);
+        if (!explosionBuffer[i].loadFromFile("../../static/audio/explosion.wav")) {
+            std::cerr << "Failed to load explosion sound!" << std::endl;
+            return -1;
+        }
+        explosionSound[i].setBuffer(explosionBuffer[i]);
+    }
     
     // 静态对象
     Skybox skybox;
