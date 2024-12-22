@@ -171,10 +171,18 @@ void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const
 
     glBindVertexArray(VAO);
 
+    GLuint last_texture = -1;
+    size_t last_idx = -1;
     for (size_t idx = 0;idx < textureRenderList.size();idx ++) {
-        glBindTexture(GL_TEXTURE_2D, textureRenderList[idx]);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (void*)(idx * 3 * sizeof(unsigned int)));
+        GLuint current_texture = textureRenderList[idx];
+        if(current_texture != last_texture){
+            glDrawElements(GL_TRIANGLES, (idx - last_idx) * 3, GL_UNSIGNED_INT, (void*)(last_idx * 3 * sizeof(unsigned int)));
+            last_idx = idx;
+            glBindTexture(GL_TEXTURE_2D, current_texture);
+            last_texture = current_texture;
+        }
     }
+    glDrawElements(GL_TRIANGLES, (textureRenderList.size() - 1 - last_idx) * 3, GL_UNSIGNED_INT, (void*)(last_idx * 3 * sizeof(unsigned int)));
 
     glBindVertexArray(0);
 }
