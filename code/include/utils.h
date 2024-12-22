@@ -26,6 +26,6 @@ glm::vec3 getRandomColor();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 using Clock = std::chrono::high_resolution_clock;
-void measureTime(const std::string &stageName, const Clock::time_point &start);
+std::string measureTime(const std::string &stageName, const Clock::time_point &start);
 
 #endif
