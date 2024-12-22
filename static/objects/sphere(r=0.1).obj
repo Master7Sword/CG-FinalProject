@@ -1,6 +1,6 @@
 # Blender 4.1.1
 # www.blender.org
-mtllib sphere.mtl
+mtllib sphere(r=0.1).mtl
 o Sphere
 v 0.000000 0.075461 -0.054826
 v 0.000000 -0.028824 -0.088710

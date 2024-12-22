@@ -56,7 +56,7 @@ void processInput(GLFWwindow* window, float deltaTime, std::vector<Particle>& pa
             // 仅在按下时触发一次
             enterKeyPressed = true; // 标记为已按下
 
-            // launchSound[launch_index].play(); // 发射音效
+            launchSound[launch_index].play(); // 发射音效
             launch_index = (launch_index + 1) % MAX_SOUNDS;
 
             Particle test;
@@ -107,18 +107,18 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     // 初始化音效
-    // for (int i = 0; i < MAX_SOUNDS; ++i){
-    //     if (!launchBuffer[i].loadFromFile("../../static/audio/launch.wav")) {
-    //         std::cerr << "Failed to load launch.wav" << std::endl;
-    //         return -1;
-    //     }
-    //     launchSound[i].setBuffer(launchBuffer[i]);
-    //     if (!explosionBuffer[i].loadFromFile("../../static/audio/explosion.wav")) {
-    //         std::cerr << "Failed to load explosion sound!" << std::endl;
-    //         return -1;
-    //     }
-    //     explosionSound[i].setBuffer(explosionBuffer[i]);
-    // }
+    for (int i = 0; i < MAX_SOUNDS; ++i){
+        if (!launchBuffer[i].loadFromFile("../../static/audio/launch.wav")) {
+            std::cerr << "Failed to load launch.wav" << std::endl;
+            return -1;
+        }
+        launchSound[i].setBuffer(launchBuffer[i]);
+        if (!explosionBuffer[i].loadFromFile("../../static/audio/explosion.wav")) {
+            std::cerr << "Failed to load explosion sound!" << std::endl;
+            return -1;
+        }
+        explosionSound[i].setBuffer(explosionBuffer[i]);
+    }
     
     // 静态对象
     Skybox skybox;
@@ -127,10 +127,10 @@ int main() {
     Ground ground;
     ground.initialize("../../static/ground_textures/ground_stone.png");
 
-    ObjLoader shrine;
-    if (!shrine.load("../../static/objects/shrine.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
-        return -1;
-    }
+    // ObjLoader shrine;
+    // if (!shrine.load("../../static/objects/shrine.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    //     return -1;
+    // }
     ObjLoader maple;
     if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
         return -1;
@@ -173,10 +173,11 @@ int main() {
         // 4. 渲染固定物体
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
-        glm::mat4 model = glm::mat4(0.0000001f); 
+        glm::mat4 model = glm::mat4(1.0f); 
+        model = glm::scale(model, glm::vec3(0.5f)); 
         skybox.render(view, projection);
         ground.render(view, projection, lights, env_light);
-        shrine.render(view, projection, model);
+        // shrine.render(view, projection, model);
         maple.render(view, projection, model);
         frame_log += measureTime("Object Render", renderStart);
 

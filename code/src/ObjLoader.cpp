@@ -182,7 +182,6 @@ void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projecti
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
     // 设置颜色
-
     glUniform3fv(glGetUniformLocation(shaderProgram, "overrideColor"), 1, glm::value_ptr(color));
     glUniform1f(glGetUniformLocationARB(shaderProgram, "transparency"), transparency);
 

@@ -32,7 +32,7 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
 
         if (!is_boomed) {
             if (v.y < 0.5f) {
-                // explosionSound[explosion_index].play();
+                explosionSound[explosion_index].play();
                 explosion_index = (explosion_index + 1) % MAX_SOUNDS;
 
                 is_boomed = true;
