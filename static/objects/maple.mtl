@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 3
-map_Kd textures/leaves.png
+map_Kd temp_textures/leaves.png
 
 newmtl wood
 Ns 321.556213
@@ -21,4 +21,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 3
-map_Kd textures/wood.png
+map_Kd temp_textures/wood.png

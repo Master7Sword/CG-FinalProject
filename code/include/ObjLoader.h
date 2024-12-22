@@ -13,6 +13,12 @@
 
 
 
+struct ObjectRenderMetaData {
+    GLuint texture;
+    GLsizei size;
+    size_t start_idx;
+};
+
 class ObjLoader {
 public:
     ObjLoader() : VAO(0), VBO(0), EBO(0), shaderProgram(0) {}
@@ -30,6 +36,7 @@ private:
     std::vector<unsigned int> indices;
     std::vector<int> materialIndices; // 每个面对应的材质索引
     std::unordered_map<int, GLuint> materialTextures; // 材质索引 -> 纹理ID映射
+    std::vector<ObjectRenderMetaData> textureRenderList;
 
     GLuint loadShader(const char* vertexPath, const char* fragmentPath);
 };

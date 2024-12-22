@@ -1,3 +1,6 @@
+#include <thread>
+#include <mutex>
+
 #include "ObjLoader.h"
 #include "utils.h"
 
@@ -26,6 +29,7 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath,
     }
 
     // 加载材质的纹理
+    // #pragma omp parallel for
     for (size_t i = 0; i < materials.size(); ++i) {
         if (!materials[i].diffuse_texname.empty()) {
             std::string texturePath = mtlBasePath + "/" + materials[i].diffuse_texname;
@@ -40,6 +44,7 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath,
     }
 
     // 加载顶点数据
+    // #pragma omp parallel for
     for (const auto& shape : shapes) {
         size_t indexOffset = 0;
         for (size_t f = 0; f < shape.mesh.num_face_vertices.size(); ++f) {
@@ -68,6 +73,31 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath,
             }
             indexOffset += fv;
         }
+    }
+
+    GLuint last_texture = -1;
+    size_t last_idx = 0;
+    for (size_t idx = 0;idx < materialIndices.size();idx ++) {
+        GLuint current_texture;
+
+        int materialID = materialIndices[idx];
+        auto it = materialTextures.find(materialID);
+        if (it != materialTextures.end()) {
+            current_texture = it->second;
+        } else {
+            current_texture = 0;
+        }
+
+        if(current_texture != last_texture){
+            if (idx - last_idx > 0) {
+                textureRenderList.push_back(ObjectRenderMetaData{last_texture, GLsizei(idx - last_idx) * 3, last_idx * 3});
+            }
+            last_idx = idx;
+            last_texture = current_texture;
+        }
+    }
+    if (materialIndices.size() - 1 - last_idx > 0) {
+        textureRenderList.push_back(ObjectRenderMetaData{last_texture, GLsizei(materialIndices.size() - 1 - last_idx) * 3, last_idx * 3});
     }
 
     // 创建 VAO, VBO, EBO
@@ -156,18 +186,12 @@ void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const
 
     glBindVertexArray(VAO);
 
-    size_t indexOffset = 0;
-    for (size_t i = 0; i < materialIndices.size(); ++i) {
-        int materialID = materialIndices[i];
-        auto it = materialTextures.find(materialID);
-        if (it != materialTextures.end()) {
-            glBindTexture(GL_TEXTURE_2D, it->second);
-        } else {
-            glBindTexture(GL_TEXTURE_2D, 0);
-        }
-
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (void*)(indexOffset * sizeof(unsigned int)));
-        indexOffset += 3;
+    for(ObjectRenderMetaData& meta_data : textureRenderList){
+        GLuint texture = meta_data.texture;
+        GLsizei size = meta_data.size;
+        size_t start_idx = meta_data.start_idx;
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, (void*)(start_idx * sizeof(unsigned int)));
     }
 
     glBindVertexArray(0);
@@ -182,7 +206,6 @@ void ObjLoader::renderWithColor(const glm::mat4& view, const glm::mat4& projecti
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
     // 设置颜色
-
     glUniform3fv(glGetUniformLocation(shaderProgram, "overrideColor"), 1, glm::value_ptr(color));
     glUniform1f(glGetUniformLocationARB(shaderProgram, "transparency"), transparency);
 
