@@ -1,0 +1,4 @@
+CompileFlags:
+  Add: 
+    - "-I/home/usr/CG-FinalProject/code/include"
+    - "-std=c++17"

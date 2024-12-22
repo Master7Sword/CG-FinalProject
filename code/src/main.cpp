@@ -127,14 +127,18 @@ int main() {
     Ground ground;
     ground.initialize("../../static/ground_textures/ground_stone.png");
 
-    ObjLoader yomiya;
-    if (!yomiya.load("../../static/objects/yomiya.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
-        return -1;
-    }
+    // ObjLoader shrine;
+    // if (!shrine.load("../../static/objects/shrine.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    //     return -1;
+    // }
     // ObjLoader maple;
     // if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
     //     return -1;
     // }
+    ObjLoader sky;
+    if (!sky.load("../../static/objects/sky.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+        return -1;
+    }
     
 
     ParticleRenderer particleRenderer;
@@ -164,10 +168,18 @@ int main() {
         // 4. 渲染固定物体
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
-        glm::mat4 model = glm::mat4(0.1f); 
+        
+        // 5. 模型缩放
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::scale(model, glm::vec3(0.08f));
+        
+        // glEnable(GL_BLEND);
+        // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         skybox.render(view, projection);
         ground.render(view, projection, lights, env_light);
-        yomiya.render(view, projection, model);
+        sky.render(view, projection, model);
+        // shrine.render(view, projection, model);
         // maple.render(view, projection, model);
         measureTime("固定物体渲染", renderStart);
 

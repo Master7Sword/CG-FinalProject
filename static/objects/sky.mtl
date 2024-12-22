@@ -1,0 +1,42 @@
+# Blender 3.6.15 MTL File: '大社.blend'
+# www.blender.org
+
+newmtl Material.004
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+illum 2
+map_Kd textures/moon.png
+map_Ke textures/moon.png
+map_d textures/moon.png
+
+newmtl mat_3.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+illum 2
+map_Kd textures/mat_3.001.png
+map_Ke textures/mat_3.001.png
+map_d textures/mat_3.001.png
+
+newmtl mat_4.002
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+illum 2
+map_Kd textures/mat_4.002.png
+map_Ke textures/mat_4.002.png
+map_d textures/mat_4.002.png
+
+newmtl mat_5.002
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.450000
+illum 2
+map_Kd textures/mat_5.002.png
+map_Ke textures/mat_5.002.png
+map_d textures/mat_5.002.png
