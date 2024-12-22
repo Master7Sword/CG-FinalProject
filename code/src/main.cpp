@@ -127,14 +127,14 @@ int main() {
     Ground ground;
     ground.initialize("../../static/ground_textures/ground_stone.png");
 
-    // ObjLoader shrine;
-    // if (!shrine.load("../../static/objects/shrine.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
-    //     return -1;
-    // }
-    ObjLoader maple;
-    if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    ObjLoader shrine;
+    if (!shrine.load("../../static/objects/shrine.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
         return -1;
     }
+    // ObjLoader maple;
+    // if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    //     return -1;
+    // }
     
 
     ParticleRenderer particleRenderer;
@@ -174,11 +174,11 @@ int main() {
         glm::mat4 view = Camera::getViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), float(window_width) / window_height, 0.1f, 100.0f);
         glm::mat4 model = glm::mat4(1.0f); 
-        model = glm::scale(model, glm::vec3(0.5f)); 
+        model = glm::scale(model, glm::vec3(0.1f)); 
         skybox.render(view, projection);
         ground.render(view, projection, lights, env_light);
-        // shrine.render(view, projection, model);
-        maple.render(view, projection, model);
+        shrine.render(view, projection, model);
+        // maple.render(view, projection, model);
         frame_log += measureTime("Object Render", renderStart);
 
         auto particleUpdateStart = Clock::now();
