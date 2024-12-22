@@ -75,14 +75,29 @@ bool ObjLoader::load(const std::string& objPath, const std::string& mtlBasePath,
         }
     }
 
-    for (size_t i = 0; i < materialIndices.size(); ++i) {
-        int materialID = materialIndices[i];
+    GLuint last_texture = -1;
+    size_t last_idx = 0;
+    for (size_t idx = 0;idx < materialIndices.size();idx ++) {
+        GLuint current_texture;
+
+        int materialID = materialIndices[idx];
         auto it = materialTextures.find(materialID);
         if (it != materialTextures.end()) {
-            textureRenderList.push_back(it->second);
+            current_texture = it->second;
         } else {
-            textureRenderList.push_back(0);
+            current_texture = 0;
         }
+
+        if(current_texture != last_texture){
+            if (idx - last_idx > 0) {
+                textureRenderList.push_back(ObjectRenderMetaData{last_texture, GLsizei(idx - last_idx) * 3, last_idx * 3});
+            }
+            last_idx = idx;
+            last_texture = current_texture;
+        }
+    }
+    if (materialIndices.size() - 1 - last_idx > 0) {
+        textureRenderList.push_back(ObjectRenderMetaData{last_texture, GLsizei(materialIndices.size() - 1 - last_idx) * 3, last_idx * 3});
     }
 
     // 创建 VAO, VBO, EBO
@@ -171,18 +186,13 @@ void ObjLoader::render(const glm::mat4& view, const glm::mat4& projection, const
 
     glBindVertexArray(VAO);
 
-    GLuint last_texture = -1;
-    size_t last_idx = -1;
-    for (size_t idx = 0;idx < textureRenderList.size();idx ++) {
-        GLuint current_texture = textureRenderList[idx];
-        if(current_texture != last_texture){
-            glDrawElements(GL_TRIANGLES, (idx - last_idx) * 3, GL_UNSIGNED_INT, (void*)(last_idx * 3 * sizeof(unsigned int)));
-            last_idx = idx;
-            glBindTexture(GL_TEXTURE_2D, current_texture);
-            last_texture = current_texture;
-        }
+    for(ObjectRenderMetaData& meta_data : textureRenderList){
+        GLuint texture = meta_data.texture;
+        GLsizei size = meta_data.size;
+        size_t start_idx = meta_data.start_idx;
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, (void*)(start_idx * sizeof(unsigned int)));
     }
-    glDrawElements(GL_TRIANGLES, (textureRenderList.size() - 1 - last_idx) * 3, GL_UNSIGNED_INT, (void*)(last_idx * 3 * sizeof(unsigned int)));
 
     glBindVertexArray(0);
 }
