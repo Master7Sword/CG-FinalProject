@@ -36,7 +36,8 @@ private:
     std::vector<unsigned int> indices;                    // 顶点索引数组，用于创建EBO
     std::vector<int> materialIndices;                     // 顶点材质的索引
     std::unordered_map<int, GLuint> materialToTextureMap; // 材质索引到纹理ID的映射
-    std::vector<ObjectRenderMetaData> textureRenderList;
+    std::vector<ObjectRenderMetaData> textureRenderList;  // 纹理渲染列表
+    std::unordered_map<std::string, int> textureNameToID; // 纹理文件名到材质索引的映射
 
     GLuint loadShader(const char *vertexPath, const char *fragmentPath);
 };

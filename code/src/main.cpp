@@ -194,6 +194,10 @@ int main()
     if (!sky.load("../../static/objects/sky.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
         return -1;
     }
+    ObjLoader yomiya;
+    if (!yomiya.load("../../static/objects/yomiya.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+        return -1;
+    }
     
 
     ParticleRenderer particleRenderer;
@@ -257,9 +261,8 @@ int main()
 
         model = glm::scale(glm::mat4(1.0f), glm::vec3(0.08f));
         sky.renderWithTexture(view, projection, model);
-
-        model = glm::scale(glm::mat4(1.0f), glm::vec3(0.08f)); 
         shrine.renderWithTexture(view, projection, model);
+        yomiya.renderWithTexture(view, projection, model);
 
         // 7. 交换缓冲区和轮询事件
         auto bufferSwapStart = Clock::now();

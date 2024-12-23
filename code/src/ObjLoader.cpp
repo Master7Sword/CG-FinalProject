@@ -46,15 +46,23 @@ bool ObjLoader::load(const std::string &objPath, const std::string &materialRoot
         if (!materials[i].diffuse_texname.empty())
         {
             std::string texturePath = materialRootPath + "/" + materials[i].diffuse_texname;
-            GLuint textureID = loadTexture(texturePath);
-            if (textureID)
+            if(textureNameToID[texturePath] != 0)
             {
-                materialToTextureMap[i] = textureID; // 保存材质索引和纹理ID的映射
-                std::cout << "Loaded texture for material " << i << " at " << texturePath << std::endl;
+                materialToTextureMap[i] = textureNameToID[texturePath];
             }
             else
             {
-                std::cerr << "Failed to load texture for material " << i << " at " << texturePath << std::endl;
+                GLuint textureID = loadTexture(texturePath);
+                if (textureID)
+                {
+                    materialToTextureMap[i] = textureID; // 保存材质索引和纹理ID的映射
+                    textureNameToID[texturePath] = textureID;
+                    std::cout << "Loaded texture for material " << i << " at " << texturePath << std::endl;
+                }
+                else
+                {
+                    std::cerr << "Failed to load texture for material " << i << " at " << texturePath << std::endl;
+                }
             }
         }
     }
