@@ -186,13 +186,10 @@ int main()
     ground.initialize("../../static/ground_textures/ground_stone.png");
 
     ObjLoader shrine;
-    if (!shrine.load("../../static/objects/shrine.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    if (!shrine.load("../../static/objects/shrine.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag"))
+    {
         return -1;
     }
-    // ObjLoader maple;
-    // if (!maple.load("../../static/objects/maple.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
-    //     return -1;
-    // }
     ObjLoader sky;
     if (!sky.load("../../static/objects/sky.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
         return -1;
@@ -259,10 +256,10 @@ int main()
         frame_log += measureTime("Particle Render", particleRenderStart);
 
         model = glm::scale(glm::mat4(1.0f), glm::vec3(0.08f));
-        sky.render(view, projection, model);
+        sky.renderWithTexture(view, projection, model);
 
         model = glm::scale(glm::mat4(1.0f), glm::vec3(0.08f)); 
-        shrine.render(view, projection, model);
+        shrine.renderWithTexture(view, projection, model);
 
         // 7. 交换缓冲区和轮询事件
         auto bufferSwapStart = Clock::now();
