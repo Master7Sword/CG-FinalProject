@@ -25,7 +25,7 @@ public:
     ~ObjLoader();
 
     bool load(const std::string &objPath, const std::string &materialRootPath, const char *vertPath, const char *fragPath);
-    void render(const glm::mat4 &view, const glm::mat4 &projection, const glm::mat4 &model);
+    void renderWithTexture(const glm::mat4 &view, const glm::mat4 &projection, const glm::mat4 &model);
     void renderWithColor(const glm::mat4 &view, const glm::mat4 &projection, const glm::mat4 &model, const glm::vec3 &color, const float transparency);
     GLuint loadTexture(const std::string &texturePath);
 

@@ -130,7 +130,6 @@ bool ObjLoader::load(const std::string &objPath, const std::string &materialRoot
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
-
     // 绑定VAO
     glBindVertexArray(VAO);
     // 绑定并填充VBO
@@ -148,6 +147,7 @@ bool ObjLoader::load(const std::string &objPath, const std::string &materialRoot
     // 解绑VAO
     glBindVertexArray(0);
 
+    // 加载着色器
     shaderProgram = loadShader(vertPath, fragPath);
 
     return true;
@@ -177,9 +177,7 @@ GLuint ObjLoader::loadTexture(const std::string &texturePath)
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
-    {
         std::cerr << "Failed to load texture at " << texturePath << std::endl;
-    }
 
     // 释放内存
     stbi_image_free(imgData);
@@ -189,40 +187,45 @@ GLuint ObjLoader::loadTexture(const std::string &texturePath)
 
 GLuint ObjLoader::loadShader(const char *vertexPath, const char *fragmentPath)
 {
-    std::string vertexCode = readFile(vertexPath);
-    std::string fragmentCode = readFile(fragmentPath);
-    const char *vertexShaderSource = vertexCode.c_str();
-    const char *fragmentShaderSource = fragmentCode.c_str();
+    // 读取着色器代码
+    const char *vertexShaderCode = readFile(vertexPath).c_str();
+    const char *fragmentShaderCode = readFile(fragmentPath).c_str();
 
+    // 创建并编译顶点着色器
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+    glShaderSource(vertexShader, 1, &vertexShaderCode, nullptr);
     glCompileShader(vertexShader);
 
+    // 创建并编译片段着色器
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
+    glShaderSource(fragmentShader, 1, &fragmentShaderCode, nullptr);
     glCompileShader(fragmentShader);
 
+    // 创建着色器程序
     GLuint program = glCreateProgram();
     glAttachShader(program, vertexShader);
     glAttachShader(program, fragmentShader);
     glLinkProgram(program);
 
+    // 释放着色器对象
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
     return program;
 }
 
-void ObjLoader::render(const glm::mat4 &view, const glm::mat4 &projection, const glm::mat4 &model)
+void ObjLoader::renderWithTexture(const glm::mat4 &view, const glm::mat4 &projection, const glm::mat4 &model)
 {
+    // 加载着色器程序
     glUseProgram(shaderProgram);
 
+    // 设置矩阵
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
+    // 渲染每个纹理批次
     glBindVertexArray(VAO);
-
     for (ObjectRenderMetaData &meta_data : textureRenderList)
     {
         GLuint texture = meta_data.texture;
@@ -231,7 +234,6 @@ void ObjLoader::render(const glm::mat4 &view, const glm::mat4 &projection, const
         glBindTexture(GL_TEXTURE_2D, texture);
         glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, (void *)(start_idx * sizeof(unsigned int)));
     }
-
     glBindVertexArray(0);
 }
 
@@ -248,6 +250,7 @@ void ObjLoader::renderWithColor(const glm::mat4 &view, const glm::mat4 &projecti
     glUniform3fv(glGetUniformLocation(shaderProgram, "overrideColor"), 1, glm::value_ptr(color));
     glUniform1f(glGetUniformLocationARB(shaderProgram, "transparency"), transparency);
 
+    // 给每个顶点设置颜色
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
