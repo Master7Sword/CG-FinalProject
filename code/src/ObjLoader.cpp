@@ -187,9 +187,11 @@ GLuint ObjLoader::loadTexture(const std::string &texturePath)
 
 GLuint ObjLoader::loadShader(const char *vertexPath, const char *fragmentPath)
 {
-    // 读取着色器代码
-    const char *vertexShaderCode = readFile(vertexPath).c_str();
-    const char *fragmentShaderCode = readFile(fragmentPath).c_str();
+    // 读取着色器代码（必须设置中间变量，否则会被立即释放）
+    std::string vertexShaderSource = readFile(vertexPath);
+    std::string fragmentShaderSource = readFile(fragmentPath);
+    const char *vertexShaderCode = vertexShaderSource.c_str();
+    const char *fragmentShaderCode = fragmentShaderSource.c_str();
 
     // 创建并编译顶点着色器
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
