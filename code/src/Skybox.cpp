@@ -9,7 +9,7 @@
 
 
 void Skybox::initialize() {
-    skybox_size = 50.0;
+    skybox_size = 60.0;
     float skyboxVertices[] = {      
     -skybox_size,  skybox_size, -skybox_size,
     -skybox_size, -skybox_size, -skybox_size,

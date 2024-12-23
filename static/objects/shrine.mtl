@@ -61,24 +61,14 @@ map_d textures/Tex_0015.png
 map_Bump -bm 1.000000 textures/Tex_0015_N.png
 
 newmtl 材質14
-Ns 201.339569
-Ka 0.114896 0.114896 0.114896
-Kd 1.000000 1.000000 1.000000
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 3
-
-newmtl 材質14.001
-Ns 201.339569
-Ka 0.114896 0.114896 0.114896
-Kd 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 3
+Ni 1.450000
+illum 2
+map_Kd textures/leaf01.png
+map_Ke textures/leaf01.png
+map_d textures/leaf01.png
 
 newmtl 材質15
 Ns 250.000000
@@ -108,10 +98,10 @@ Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
+Ni 1.450000
 illum 2
-map_Kd textures/Tex_0020.png
-map_d textures/Tex_0020.png
+map_Kd textures/water02.png
+map_d textures/water02.png
 
 newmtl 材質18
 Ns 250.000000
@@ -149,14 +139,17 @@ map_d textures/Tex_0003.png
 map_Bump -bm 1.000000 textures/Tex_0003_N.png
 
 newmtl 材質20
-Ns 0.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
-Ks 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.470000
-illum 1
-map_d textures/Tex_0024_E.png
+Ni 1.450000
+illum 2
+map_Kd textures/blue_on_tree.png
+map_refl textures/blue_on_tree.png
+map_d textures/blue_on_tree.png
+map_Bump -bm 1.000000 textures/blue_on_tree.png
 
 newmtl 材質21
 Ns 250.000000
@@ -280,16 +273,6 @@ map_Kd textures/Tex_0035.png
 map_d textures/Tex_0035.png
 map_Bump -bm 1.000000 textures/Tex_0035_N.png
 
-newmtl 材質31
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_d textures/Tex_0038_3.tga
-
 newmtl 材質32
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -317,22 +300,23 @@ map_Bump -bm 1.000000 textures/Tex_0017_N.png
 newmtl 材質35
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
 Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 1
-map_Ke textures/Tex_0001.png
-map_d textures/Tex_0001.png
+map_Kd textures/sakura.png
+map_Ke textures/sakura.png
+map_d textures/sakura.png
 
 newmtl 材質36
-Ns 201.339569
-Ka 0.114896 0.114896 0.114896
-Kd 1.000000 1.000000 1.000000
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 3
+Ni 1.450000
+illum 2
+map_Kd textures/lights.png
+map_Ke textures/lights.png
+map_d textures/lights.png
 
 newmtl 材質37
 Ns 250.000000
@@ -382,12 +366,12 @@ map_Bump -bm 1.000000 textures/Tex_0005_N.png
 newmtl 材質40
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.100000 0.100000 0.100000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
+Ni 1.450000
 illum 2
-map_Kd textures/Tex_0039.png
-map_d textures/Tex_0039.png
+map_Kd textures/plants01.png
+map_d textures/plants01.png
 
 newmtl 材質5
 Ns 250.000000
@@ -429,12 +413,11 @@ newmtl 材質8
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.100000 0.100000 0.100000
-Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 illum 2
 map_Kd textures/Tex_0010.png
-map_d textures/Tex_0010.png
-map_Bump -bm 1.000000 textures/Tex_0010_N.png
+map_Ke textures/Tex_0010.png
+map_d textures/Tex_0010_N.png
 
 newmtl 材質9
 Ns 250.000000
@@ -452,9 +435,12 @@ newmtl 风格化水
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
-Ks 0.100000 0.100000 0.100000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 0.000000
-d 0.200000
-illum 9
-map_Bump -s 5 5 1 -bm 1.000000 textures/Eff_Water_LargeWaves_Normal.png
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/water02.png
+map_refl textures/water02.png
+map_d textures/water02.png
+map_Bump -s 5 5 1 -bm 1.000000 textures/water02.png
