@@ -4,6 +4,7 @@
 
 ## 环境配置
 
+for Linux:
 ```
 sudo apt install -y mesa-utils libgl1-mesa-dev libglew-dev libglfw3-dev build-essential libglm-dev libsfml-dev
 export DISPLAY=:0
@@ -14,6 +15,21 @@ cd build
 cmake ..
 make
 ./Skybox_Project
+```
+
+for Mac:
+```shell
+brew install llvm libomp glew glfw3 sfml glm
+export CC=/usr/local/opt/llvm/bin/clang
+export CXX=/usr/local/opt/llvm/bin/clang++
+```
+
+运行 python 脚本请使用低于 3.13 版本 python, 并安装 `opencv-python`：
+
+```shell
+pip install python-opencv
+# mamba install py-opencv
+# conda install py-opencv
 ```
 
 ## 常见问题

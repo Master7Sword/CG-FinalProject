@@ -2,14 +2,14 @@
 cmake_minimum_required(VERSION 3.10)
 
 # 项目名称
-project(Skybox_Project)
+project(Firework)
 
 # 设置 C++ 标准
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# 打开 openmp 编译指令
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
+# 别打开 openmp 编译指令了 不然我 mac 上不好跑
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
 # 添加源文件
 set(SOURCES
