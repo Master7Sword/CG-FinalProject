@@ -22,11 +22,13 @@ set(SOURCES
     src/tiny_obj_loader.cc
     src/Particle.cpp
     src/ParticleRenderer.cpp
+    src/Fireworks.cpp
 )
 
 # 添加头文件目录
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/patterns
 )
 
 # 查找 OpenGL、GLEW 和 GLFW 库
