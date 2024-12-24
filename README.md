@@ -14,7 +14,7 @@ mkdir build
 cd build
 cmake ..
 make
-./Skybox_Project
+./firework
 ```
 
 for Mac:
