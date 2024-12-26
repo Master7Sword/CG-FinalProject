@@ -15,36 +15,6 @@
 #include "Particle.h"
 #include "ParticleRenderer.h"
 
-double lastX, lastY;
-bool firstMouse = true;
-
-// 试图鼠标移动视角失败
-// void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-//     if (firstMouse) {
-//         lastX = xpos;
-//         lastY = ypos;
-//         firstMouse = false;
-//         // 将鼠标光标位置设置为窗口中心
-//         int width, height;
-//         glfwGetWindowSize(window, &width, &height);
-//         glfwSetCursorPos(window, width / 2, height / 2);
-//     }
-//     // 计算鼠标的偏移量
-//     float xoffset = xpos - lastX;
-//     float yoffset = lastY - ypos; // 注意y坐标是反向的
-//     lastX = xpos;
-//     lastY = ypos;
-//     // 根据偏移量调整相机的俯仰和偏航
-//     const float sensitivity = 0.1f; // 可调灵敏度
-//     xoffset *= sensitivity;
-//     yoffset *= sensitivity;
-//     Camera::adjustYaw(xoffset);
-//     Camera::adjustPitch(yoffset);
-//     // 将鼠标光标重新移动到窗口中心
-//     int width, height;
-//     glfwGetWindowSize(window, &width, &height);
-//     glfwSetCursorPos(window, width / 2, height / 2);
-// }
 
 // 处理按键输入
 bool enterKeyPressed = false;
@@ -147,10 +117,6 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    // 试图鼠标移动视角失败
-    // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-    // glfwSetCursorPosCallback(window, mouse_callback);
-
     // 初始化 GLEW
     if (glewInit() != GLEW_OK)
     {
@@ -194,11 +160,6 @@ int main()
     if (!sky.load("../../static/objects/sky.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
         return -1;
     }
-    ObjLoader yomiya;
-    if (!yomiya.load("../../static/objects/yomiya.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
-        return -1;
-    }
-    
 
     ParticleRenderer particleRenderer;
     particleRenderer.initialize();
@@ -259,25 +220,21 @@ int main()
         particleRenderer.render(particles, view, projection);
         frame_log += measureTime("Particle Render", particleRenderStart);
 
-        model = glm::scale(glm::mat4(1.0f), glm::vec3(0.08f));
+        model = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
         sky.renderWithTexture(view, projection, model);
         shrine.renderWithTexture(view, projection, model);
-        yomiya.renderWithTexture(view, projection, model);
+        // yomiya.renderWithTexture(view, projection, model);
 
         // 7. 交换缓冲区和轮询事件
         auto bufferSwapStart = Clock::now();
         glfwSwapBuffers(window);
         glfwPollEvents();
 
-        // 试图鼠标移动视角失败
-        // int width, height;
-        // glfwGetWindowSize(window, &width, &height);
-        // glfwSetCursorPos(window, width / 2, height / 2);
 
         frame_log += measureTime("Buffer & Event", bufferSwapStart);
         frame_log += measureTime("Total Frame", frameStart);
-        // std::cout << "\033[2J\033[1;1H"; // ANSI 清屏序列
-        // std::cout << frame_log;
+        std::cout << "\033[2J\033[1;1H"; // ANSI 清屏序列
+        std::cout << frame_log;
     }
 
     glfwTerminate();

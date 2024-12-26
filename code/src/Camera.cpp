@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-glm::vec3 Camera::position = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 Camera::position = glm::vec3(0.0f, 0.0f, 1.0f);
 glm::vec3 Camera::front = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 Camera::up = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -14,7 +14,7 @@ glm::mat4 Camera::getViewMatrix() {
 
 void Camera::move(const glm::vec3& offset) {
     position += offset;
-    position = glm::vec3(position.x, glm::max(-0.75f, position.y), position.z);
+    position = glm::vec3(position.x, glm::max(0.25f, position.y), position.z);
 }
 
 void Camera::adjustYaw(float offset) {
