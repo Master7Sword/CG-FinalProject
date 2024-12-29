@@ -159,10 +159,7 @@ int main()
     if (!sky.load("../../static/objects/sky.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
         return -1;
     }
-    // ObjLoader test;
-    // if (!test.load("../../static/objects/test.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
-    //     return -1;
-    // }
+
 
 
     Fireworks firework;
@@ -222,7 +219,6 @@ int main()
         glm::mat4 model = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
         sky.renderWithTexture(view, projection, model, lights, env_light);
         shrine.renderWithTexture(view, projection, model, lights, env_light);
-        // test.renderWithTexture(view, projection, model, lights, env_light);
 
         // 8. 交换缓冲区和轮询事件
         auto bufferSwapStart = Clock::now();

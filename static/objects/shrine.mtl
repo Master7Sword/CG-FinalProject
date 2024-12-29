@@ -1,108 +1,155 @@
 # Blender 4.2.0 MTL File: 'final.blend'
 # www.blender.org
 
-newmtl Area_Dq_Tree_Common_Pt_01_04_Leaf_Lod0
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/1.png
-map_d  textures/1.png
-
-newmtl Area_Dq_Tree_Common_Pt_01_04_Leaf_Lod0.002
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/1.png
-map_d  textures/1.png
-
-newmtl Area_Dq_Tree_Common_Pt_01_04_Leaf_Lod0.003
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/1.png
-map_d  textures/1.png
-
-newmtl Area_Ly_Grass_Common_Sbb_Bark_01
+newmtl Material.001
 Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl Material.002
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl tree
+Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
+Ni 1.500000
 illum 2
-map_Kd  textures/Stages_Unique_CyTree01_Brak01_Diffuse.png
-map_d  textures/Stages_Unique_CyTree01_Brak01_Diffuse.png
+map_Kd  textures/leaves.png
+map_d  textures/leaves.png
 
-newmtl Area_Ly_Grass_Common_Sbb_Bark_01.001
-Ns 250.000000
+newmtl tree.003
+Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
+Ni 1.500000
 illum 2
-map_Kd  textures/Stages_Unique_CyTree01_Brak01_Diffuse.png
-map_d  textures/Stages_Unique_CyTree01_Brak01_Diffuse.png
+map_Kd  textures/leaves.png
+map_d  textures/leaves.png
 
-newmtl Area_Ly_Grass_Common_Sbb_Leaf_01_Lod0
+newmtl tree.005
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/7.png
-map_d  textures/7.png
+Ni 1.500000
+illum 2
+map_Kd  textures/leaves.png
+map_d  textures/leaves.png
 
-newmtl Area_Ly_Grass_Common_Sbb_Leaf_01_Lod0.001
+newmtl tree.006
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/7.png
-map_d  textures/7.png
+Ni 1.500000
+illum 2
+map_Kd  textures/leaves.png
+map_d  textures/leaves.png
 
-newmtl Area_Ly_Tree_Common_Pt_Bark_01
+newmtl tree.007
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/Area_Ly_Tree_Common_Pt_Bark_01_Diffuse.png
-map_d  textures/Area_Ly_Tree_Common_Pt_Bark_01_Diffuse.png
-map_Bump -bm 1.000000  textures/Area_Ly_Tree_Common_Pt_Bark_01_Normal.png
+Ni 1.500000
+illum 2
+map_Kd  textures/leaves.png
+map_d  textures/leaves.png
 
-newmtl Area_Ly_Tree_Common_Pt_Bark_01.002
+newmtl tree.008
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/Area_Ly_Tree_Common_Pt_Bark_01_Diffuse.png
-map_d  textures/Area_Ly_Tree_Common_Pt_Bark_01_Diffuse.png
-map_Bump -bm 1.000000  textures/Area_Ly_Tree_Common_Pt_Bark_01_Normal.png
+Ni 1.500000
+illum 2
+map_Kd  textures/leaves.png
+map_d  textures/leaves.png
 
-newmtl Area_Ly_Tree_Common_Pt_Bark_01.003
+newmtl wood
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/Area_Ly_Tree_Common_Pt_Bark_01_Diffuse.png
-map_d  textures/Area_Ly_Tree_Common_Pt_Bark_01_Diffuse.png
-map_Bump -bm 1.000000  textures/Area_Ly_Tree_Common_Pt_Bark_01_Normal.png
+Ni 1.500000
+illum 2
+map_Kd  textures/wood.png
+map_d  textures/wood.png
+
+newmtl wood.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/wood.png
+map_d  textures/wood.png
+
+newmtl wood.005
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/wood.png
+map_d  textures/wood.png
+
+newmtl wood.006
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/wood.png
+map_d  textures/wood.png
+
+newmtl wood.007
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/wood.png
+map_d  textures/wood.png
+
+newmtl wood.008
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/wood.png
+map_d  textures/wood.png
+
+newmtl 材質1
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/tree.png
+map_d  textures/tree.png
 
 newmtl 材質1.001
 Ns 250.000000
@@ -115,6 +162,36 @@ map_Kd textures/Tex_0002.png
 map_refl textures/Tex_0002_M.png
 map_d textures/Tex_0002.png
 map_Bump -bm 1.000000 textures/Tex_0002_N.png
+
+newmtl 材質1.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/tree.png
+map_d  textures/tree.png
+
+newmtl 材質1.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/tree.png
+map_d  textures/tree.png
+
+newmtl 材質1.004
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/tree.png
+map_d  textures/tree.png
 
 newmtl 材質10.001
 Ns 250.000000
@@ -229,6 +306,16 @@ map_Ns textures/Tex_0025_G.png
 map_d textures/Tex_0025.png
 map_Bump -bm 1.000000 textures/Tex_0025_N.png
 
+newmtl 材質2
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/sakura_leaves.png
+map_d  textures/sakura_leaves.png
+
 newmtl 材質2.001
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -240,6 +327,36 @@ map_Kd textures/Tex_0003.png
 map_refl textures/Tex_0003_M.png
 map_d textures/Tex_0003.png
 map_Bump -bm 1.000000 textures/Tex_0003_N.png
+
+newmtl 材質2.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/sakura_leaves.png
+map_d  textures/sakura_leaves.png
+
+newmtl 材質2.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/sakura_leaves.png
+map_d  textures/sakura_leaves.png
+
+newmtl 材質2.004
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd  textures/sakura_leaves.png
+map_d  textures/sakura_leaves.png
 
 newmtl 材質20.001
 Ns 0.000000
@@ -452,16 +569,6 @@ illum 1
 map_Kd textures/Tex_0037_3.tga
 map_d textures/Tex_0037_3.tga
 
-newmtl 材質39.003
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/000001213E03D938.png
-map_d  textures/000001213E03D938.png
-
 newmtl 材質4.001
 Ns 1000.000000
 Ka 1.000000 1.000000 1.000000
@@ -474,16 +581,6 @@ map_refl textures/Tex_0005_M.png
 map_d textures/Tex_0005.png
 map_Bump -bm 1.000000 textures/Tex_0005_N.png
 
-newmtl 材質4.003
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-illum 2
-map_Kd  textures/4.png
-map_d  textures/4.png
-
 newmtl 材質40.001
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -493,17 +590,6 @@ Ni 1.450000
 illum 2
 map_Kd textures/plants01.png
 map_d textures/plants01.png
-
-newmtl 材質44.001
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/00000121972154F8.png
-map_d  textures/00000121972154F8.png
-map_Bump -bm 1.200000  textures/00000121972171F8.png
 
 newmtl 材質5.001
 Ns 250.000000
@@ -562,16 +648,6 @@ map_Kd textures/Tex_0011.png
 map_refl textures/Tex_0011_M.png
 map_d textures/Tex_0011.png
 map_Bump -bm 1.000000 textures/Tex_0011_N.png
-
-newmtl 草丛2
-Ns 0.000000
-Ka 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-illum 1
-map_Kd  textures/10 (2).png
-map_d  textures/10 (2).png
 
 newmtl 风格化水.001
 Ns 0.000000

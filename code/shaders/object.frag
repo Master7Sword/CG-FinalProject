@@ -28,8 +28,8 @@ uniform vec3 viewPos;
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
 
-#define AMBIENT 0.2
-#define DIFFUSE 0.8
+#define AMBIENT 0.3
+#define DIFFUSE 0.7
 #define SPECULAR 0.5
 #define SHININESS 32 // 高光强度
 
