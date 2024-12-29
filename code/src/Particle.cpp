@@ -1,9 +1,20 @@
 #include "Particle.h"
 #include "utils.h"
+#include "msc.h"
+#include <glm/geometric.hpp>
 
-void Particle::initialize(const glm::vec3& position, const glm::vec3& direction, const glm::vec3& velocity, 
-                          const glm::vec3& color, float transparency, float ttl, bool is_boomed, bool is_tail,
-                          const glm::vec3& acceleration) {
+void Particle::initialize(
+    const glm::vec3& position,
+    const glm::vec3& direction,
+    const glm::vec3& velocity,
+    const glm::vec3& color,
+    float transparency,
+    float ttl,
+    bool is_boomed,
+    bool is_tail,
+    const glm::vec3& acceleration,
+    int pattern
+) {
     this->loc = position;
     this->dir = direction;
     this->v = velocity;
@@ -14,12 +25,12 @@ void Particle::initialize(const glm::vec3& position, const glm::vec3& direction,
     this->is_boomed = is_boomed;
     this->is_tail = is_tail;
     this->recycle = false;
+    this->pattern = pattern;
 }
 
 
 void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std::vector<Light>& lights) {
-    // 在原地添加一个粒子实现拖尾
-    if(!is_tail){
+    if(!is_tail){  // 在原地添加一个粒子实现拖尾
         Particle tail;
         tail.initialize(loc, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), color, transparency-0.05f, 3.0f, true, true, glm::vec3(0.0f, 0.0f, 0.0f));
         newParticles.push_back(tail);
@@ -27,7 +38,8 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
         // 更新当前粒子属性
         float k = -0.02; // 空气阻力系数
         a = v * v * k + glm::vec3(0.0f,-2.0f, 0.0f);
-        v += a * deltaTime;
+        // if(!is_boomed || pattern == 0)
+            v += a * deltaTime;
         loc += v * deltaTime;
 
         if (!is_boomed) {
@@ -45,18 +57,47 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                 explosionLight.ttl = 2.0f;       // 持续时间（秒）
                 lights.push_back(explosionLight);
 
-                for (int i = 0; i < 200; ++i) {
-                    glm::vec3 dir = glm::normalize(glm::vec3(
-                        (rand() % 200 - 100) / 100.0f, 
-                        (rand() % 200 - 100) / 100.0f,
-                        (rand() % 200 - 100) / 100.0f
-                    ));
-                    glm::vec3 velocity = dir * 4.0f;
-                    glm::vec3 color = getRandomColor();
-                    // glm::vec3 color = glm::vec3(255.0f/255.0f, 99.0f/255.0f, 71.0f/255.0f);
-                    Particle p;
-                    p.initialize(loc, dir, velocity, color, 1.0f, 5.0f, true, false, glm::vec3(0.0f,-0.981f, 0.0f));
-                    newParticles.push_back(p);
+                switch (pattern) {
+                case 1: {  // MSC
+                    std::vector<glm::vec3> s_locations = msc(loc, 0.1);
+                    std::vector<glm::vec3> d_locations = msc(loc, 1.0);
+                    glm::vec3 color = glm::vec3(200.0f/255.0f, 200.0f/255.0f, 255.0f/255.0f);
+                    for (int i = 0; i < s_locations.size(); ++i) {
+                        glm::vec3 dir = glm::normalize(glm::vec3(
+                            d_locations[i].x - s_locations[i].x, 
+                            d_locations[i].y - s_locations[i].y,
+                            d_locations[i].z - s_locations[i].z
+                        ));
+                        glm::vec3 velocity = dir * (glm::distance(d_locations[i], s_locations[i]) * 0.01f);
+                        Particle p;
+                        p.initialize(
+                            loc,
+                            dir,
+                            velocity,
+                            color,
+                            1.0f,
+                            5.0f,
+                            true,
+                            false,
+                            glm::vec3(0.0f, 0.0f, 0.0f),
+                            pattern
+                        );
+                        newParticles.push_back(p);
+                    }
+                } break;
+                default:  // 无图案
+                    for (int i = 0; i < 200; ++i) {
+                        glm::vec3 dir = glm::normalize(glm::vec3(
+                            (rand() % 200 - 100) / 100.0f, 
+                            (rand() % 200 - 100) / 100.0f,
+                            (rand() % 200 - 100) / 100.0f
+                        ));
+                        glm::vec3 velocity = dir * 4.0f;
+                        glm::vec3 color = getRandomColor();
+                        Particle p;
+                        p.initialize(loc, dir, velocity, color, 1.0f, 5.0f, true, false, glm::vec3(0.0f,-0.981f, 0.0f));
+                        newParticles.push_back(p);
+                    }
                 }
             }
             transparency = std::max(0.0f, transparency - 0.2f * deltaTime);
@@ -65,8 +106,7 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
             transparency = std::max(0.0f, transparency - 0.3f * deltaTime);
         }
     }
-    else{ 
-        // 拖尾粒子更新
+    else{  // 拖尾粒子更新
         ttl -= deltaTime;
         transparency = std::max(0.0f, transparency - 1.5f * deltaTime);
     }
@@ -75,26 +115,4 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
 
 bool Particle::check_recycle() const {
     return ttl <= 0.0f || recycle == true || transparency <= 0.0f;
-}
-
-void updateParticles(float deltaTime, std::vector<Particle>& particles, std::vector<Light>& lights) {
-    std::vector<Particle> newParticles;  // 用来存储新生成的粒子
-
-    // 更新每个粒子的状态
-    for (auto& particle : particles) {
-        particle.update(deltaTime, newParticles, lights);  // 新生成的粒子存入 newParticles，后续拷回 particles
-    }
-    particles.insert(particles.end(), newParticles.begin(), newParticles.end());
-    particles.erase(std::remove_if(particles.begin(), particles.end(), 
-                                   [](const Particle& p) { return p.check_recycle(); }), 
-                    particles.end());
-
-    // 更新光源的状态
-    for (auto& light : lights) {
-        light.ttl -= deltaTime;
-        light.intensity = std::max(0.0f, light.intensity - deltaTime * 0.1f); // 强度衰减速度
-    }
-    lights.erase(std::remove_if(lights.begin(), lights.end(),
-                                [](const Light& light) { return light.intensity <= 0.0f || light.ttl <= 0.0f; }),
-                 lights.end());
 }

@@ -16,7 +16,7 @@ struct Light {
 };
 
 // 光源数组
-#define MAX_LIGHTS 10
+#define MAX_LIGHTS 20
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
 

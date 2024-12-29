@@ -32,6 +32,11 @@ pip install python-opencv
 # conda install py-opencv
 ```
 
+## 烟花
+
+`ParticleRenderer` 是烟花发射器
+
+
 ## 常见问题
 
 1. 如果运行出现报错：

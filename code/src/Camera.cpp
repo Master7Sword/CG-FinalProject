@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-glm::vec3 Camera::position = glm::vec3(0.0f, 0.0f, 1.0f);
+glm::vec3 Camera::position = glm::vec3(0.0f, 0.25f, 1.0f);
 glm::vec3 Camera::front = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 Camera::up = glm::vec3(0.0f, 1.0f, 0.0f);
 
