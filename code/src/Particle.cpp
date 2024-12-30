@@ -32,12 +32,20 @@ void Particle::initialize(
 void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std::vector<Light>& lights) {
     if(!is_tail){  // 在原地添加一个粒子实现拖尾
         Particle tail;
-        tail.initialize(loc, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), color, transparency-0.05f, 3.0f, true, true, glm::vec3(0.0f, 0.0f, 0.0f));
+        tail.initialize(loc, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), color, transparency-0.2f, 3.0f, true, true, glm::vec3(0.0f, 0.0f, 0.0f));
         newParticles.push_back(tail);
 
         // 更新当前粒子属性
-        float k = -0.02; // 空气阻力系数
-        a = v * v * k + glm::vec3(0.0f,-2.0f, 0.0f);
+        float k; // 空气阻力系数
+        if(!is_boomed){
+            k = -0.2;
+            a = v * k + glm::vec3(0.0f,-2.0f, 0.0f);
+        }   
+        else{
+            k = -0.6;
+            a = v * k + glm::vec3(0.0f,-0.5f, 0.0f);
+        } 
+            
         v += a * deltaTime;
         loc += v * deltaTime;
 
@@ -52,7 +60,7 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                 Light explosionLight;
                 explosionLight.position = loc;
                 explosionLight.color = color;
-                explosionLight.intensity = 20.0f; // 初始强度
+                explosionLight.intensity = 600.0f; // 初始强度
                 explosionLight.ttl = 5.0f;       // 持续时间（秒）
                 lights.push_back(explosionLight);
 
@@ -85,18 +93,46 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                     }
                 } break;
                 default:  // 无图案
+                    glm::vec3 color1 = getRandomColor();
+                    glm::vec3 color2 = getRandomColor();
                     for (int i = 0; i < 200; ++i) {
                         glm::vec3 dir = glm::normalize(glm::vec3(
                             (rand() % 200 - 100) / 100.0f, 
                             (rand() % 200 - 100) / 100.0f,
                             (rand() % 200 - 100) / 100.0f
                         ));
-                        glm::vec3 velocity = dir * 4.0f;
-                        glm::vec3 color = getRandomColor();
+                        glm::vec3 velocity = dir * 5.0f;
+                        // glm::vec3 color = getRandomColor();
                         Particle p;
-                        p.initialize(loc, dir, velocity, color, 1.0f, 5.0f, true, false, glm::vec3(0.0f,-0.981f, 0.0f));
+                        p.initialize(loc, dir, velocity, color1, 1.0f, 5.0f, true, false, glm::vec3(0.0f,-0.981f, 0.0f));
                         newParticles.push_back(p);
                     }
+                    for (int i = 0; i < 200; ++i) {
+                        glm::vec3 dir = glm::normalize(glm::vec3(
+                            (rand() % 200 - 100) / 100.0f, 
+                            (rand() % 200 - 100) / 100.0f,
+                            (rand() % 200 - 100) / 100.0f
+                        ));
+                        glm::vec3 velocity = dir * 3.0f;
+                        // glm::vec3 color = getRandomColor();
+                        Particle p;
+                        p.initialize(loc, dir, velocity, color2, 1.0f, 5.0f, true, false, glm::vec3(0.0f,-0.981f, 0.0f));
+                        newParticles.push_back(p);
+                    }
+                    Light explosionLight1;
+                    explosionLight1.position = loc;
+                    explosionLight1.color = color1;
+                    explosionLight1.intensity = 500.0f; // 初始强度
+                    explosionLight1.ttl = 5.0f;       // 持续时间（秒）
+
+                    Light explosionLight2;
+                    explosionLight2.position = loc;
+                    explosionLight2.color = color2;
+                    explosionLight2.intensity = 500.0f; // 初始强度
+                    explosionLight2.ttl = 5.0f;       // 持续时间（秒）
+
+                    lights.push_back(explosionLight1);
+                    lights.push_back(explosionLight2);
                 }
             }
             transparency = std::max(0.0f, transparency - 0.2f * deltaTime);

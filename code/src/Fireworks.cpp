@@ -2,6 +2,7 @@
 #include "ParticleRenderer.h"
 #include <algorithm>
 #include <GLFW/glfw3.h>
+#include <random>
 
 void Fireworks::initialize() {
   renderer.initialize();
@@ -9,10 +10,22 @@ void Fireworks::initialize() {
 
 void Fireworks::launch() {
   Particle test;
+  float vMin = 10.0f;
+  float vMax = 15.0f;
+  float xMin = -20.0f;
+  float xMax = 20.0f;
+  float zMin = -40.0f;
+  float zMax = -20.0f;
+  double random_fraction_x = static_cast<double>(std::rand()) / RAND_MAX;
+  double random_fraction_z = static_cast<double>(std::rand()) / RAND_MAX;
+  double random_fraction_v = static_cast<double>(std::rand()) / RAND_MAX;
+  float xCoord = xMin + random_fraction_x * (xMax - xMin);
+  float zCoord = zMin + random_fraction_z * (zMax - zMin);
+  float velocity = vMin + random_fraction_v * (vMax - vMin);
   test.initialize(
-    glm::vec3(0.0f, -5.0f, -30.0f),
+    glm::vec3(xCoord, -5.0f, zCoord),
     glm::vec3(0.0f, 1.0f, 0.0f),
-    glm::vec3(0.0f, 12.0f, 0.0f),
+    glm::vec3(0.0f, velocity, 0.0f),
     glm::vec3(1.0f, 1.0f, 1.0f),
     1.0f,
     100.0f,
@@ -58,7 +71,8 @@ void Fireworks::update(float deltaTime, std::vector<Light> &lights) {
   // 更新光源的状态
   for (auto &light : lights) {
     light.ttl -= deltaTime;
-    light.intensity = std::max(0.0f, light.intensity - deltaTime * 7.5f); // 强度衰减速度
+    if(light.ttl < FLT_MAX / 2)
+      light.intensity = std::max(0.0f, light.intensity - deltaTime * 300.0f); // 强度衰减速度
   }
   lights.erase(
     std::remove_if(

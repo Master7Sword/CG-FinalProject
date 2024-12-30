@@ -16,7 +16,7 @@ struct Light {
 };
 
 // 光源数组
-#define MAX_LIGHTS 20
+#define MAX_LIGHTS 100
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
 
@@ -24,8 +24,8 @@ uniform int numLights;
 float calculateAttenuation(float distance) {
     // 衰减系数，可以根据需要调整
     float constant = 1.0;
-    float linear = 0.09;
-    float quadratic = 0.032;
+    float linear = 100.0;
+    float quadratic = 1.0;
     return 1.0 / (constant + linear * distance + quadratic * (distance * distance));
 }
 
@@ -41,7 +41,7 @@ void main() {
 
     for (int i = 0; i < numLights; ++i) {
         // 计算光源到片段的距离
-        float distance = length(lights[i].position - FragPos);
+        float distance = length(lights[i].position - FragPos) + length(viewPos - FragPos) / 10;
         // 计算衰减系数
         float attenuation = calculateAttenuation(distance);
         
