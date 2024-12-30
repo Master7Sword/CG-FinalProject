@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Sky.h"
 #include "utils.h"
 #include "Light.h"
 #include "Camera.h"
@@ -155,12 +156,10 @@ int main()
     {
         return -1;
     }
-    ObjLoader sky;
-    if (!sky.load("../../static/objects/sky.obj", "../../static/objects", "../shaders/object.vert", "../shaders/object.frag")) {
+    Sky sky;
+    if (!sky.load("../../static/objects/sky.obj", "../../static/objects", "../shaders/sky.vert", "../shaders/sky.frag")) {
         return -1;
     }
-
-
 
     Fireworks firework;
     firework.initialize();
@@ -216,8 +215,9 @@ int main()
         firework.render(view, projection);
         frame_log += measureTime("Particle Render", particleRenderStart);
 
-        glm::mat4 model = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
-        sky.renderWithTexture(view, projection, model, lights, env_light);
+        glm::mat4 model = glm::scale(glm::mat4(1.0f), glm::vec3(0.08f));
+        sky.render(view, projection, model);
+        model = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
         shrine.renderWithTexture(view, projection, model, lights, env_light);
 
         // 8. 交换缓冲区和轮询事件
@@ -228,8 +228,8 @@ int main()
 
         frame_log += measureTime("Buffer & Event", bufferSwapStart);
         frame_log += measureTime("Total Frame", frameStart);
-        // std::cout << "\033[2J\033[1;1H"; // ANSI 清屏序列
-        // std::cout << frame_log;
+        std::cout << "\033[2J\033[1;1H"; // ANSI 清屏序列
+        std::cout << frame_log;
     }
 
     glfwTerminate();

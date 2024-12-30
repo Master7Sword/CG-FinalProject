@@ -19,7 +19,6 @@ struct Light {
     float intensity;
 };
 
-uniform bool has_alpha;
 uniform Material material;
 uniform vec3 viewPos;
 

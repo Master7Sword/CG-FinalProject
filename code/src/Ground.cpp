@@ -1,10 +1,4 @@
 #include "Ground.h"
-#include "stb_image.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 void Ground::initialize(const std::string& texturePath) {
 float groundVertices[] = {

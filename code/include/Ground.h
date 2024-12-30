@@ -1,12 +1,19 @@
 #ifndef GROUND_H
 #define GROUND_H
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <string>
 #include <vector>
 #include "Camera.h"
 #include "Light.h"
+#include "stb_image.h"
+
 
 class Ground {
 public:

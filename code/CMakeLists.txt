@@ -14,6 +14,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 # 添加源文件
 set(SOURCES
     src/main.cpp
+    src/Sky.cpp
     src/Skybox.cpp
     src/Ground.cpp
     src/Camera.cpp
