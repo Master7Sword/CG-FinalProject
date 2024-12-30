@@ -70,20 +70,3 @@ file(GLOB SHADER_SOURCES
     ${CMAKE_SOURCE_DIR}/shaders/*.vert
     ${CMAKE_SOURCE_DIR}/shaders/*.frag
 )
-
-# # 复制着色器文件到构建目录
-# foreach(
-#     SHADER_FILE
-#     ${SHADER_SOURCES}
-# )
-# get_filename_component(
-#     SHADER_NAME
-#     ${SHADER_FILE}
-#     NAME
-# )
-# configure_file(
-#     ${SHADER_FILE}
-#     ${CMAKE_BINARY_DIR}/${SHADER_NAME}
-#     COPYONLY
-# )
-# endforeach()
