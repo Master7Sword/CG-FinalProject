@@ -58,7 +58,7 @@ void Fireworks::update(float deltaTime, std::vector<Light> &lights) {
   // 更新光源的状态
   for (auto &light : lights) {
     light.ttl -= deltaTime;
-    light.intensity = std::max(0.0f, light.intensity - deltaTime * 0.1f); // 强度衰减速度
+    light.intensity = std::max(0.0f, light.intensity - deltaTime * 7.5f); // 强度衰减速度
   }
   lights.erase(
     std::remove_if(

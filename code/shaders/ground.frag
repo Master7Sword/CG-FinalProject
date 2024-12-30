@@ -20,6 +20,15 @@ struct Light {
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
 
+// 光线衰减函数
+float calculateAttenuation(float distance) {
+    // 衰减系数，可以根据需要调整
+    float constant = 1.0;
+    float linear = 0.09;
+    float quadratic = 0.032;
+    return 1.0 / (constant + linear * distance + quadratic * (distance * distance));
+}
+
 void main() {
     vec3 textureColor = texture(groundTexture, TexCoords).rgb;
 
@@ -31,21 +40,26 @@ void main() {
     vec3 viewDir = normalize(viewPos - FragPos);
 
     for (int i = 0; i < numLights; ++i) {
+        // 计算光源到片段的距离
+        float distance = length(lights[i].position - FragPos);
+        // 计算衰减系数
+        float attenuation = calculateAttenuation(distance);
+        
         // 环境光
         float ambientStrength = 0.01;
-        ambient += ambientStrength * lights[i].color * lights[i].intensity;
+        ambient += ambientStrength * lights[i].color * lights[i].intensity * attenuation;
 
         // 漫反射
         float diffuseStrength = 0.75;
         vec3 lightDir = normalize(lights[i].position - FragPos);
         float diff = max(dot(norm, lightDir), 0.0);
-        diffuse += diffuseStrength * diff * lights[i].color * lights[i].intensity;
+        diffuse += diffuseStrength * diff * lights[i].color * lights[i].intensity * attenuation;
  
         // 镜面反射
         float specularStrength = 0.25;
         vec3 reflectDir = reflect(-lightDir, norm);
         float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16);
-        specular += specularStrength * spec * lights[i].color * lights[i].intensity;
+        specular += specularStrength * spec * lights[i].color * lights[i].intensity * attenuation;
     }
 
     vec3 result = (ambient + diffuse + specular) * textureColor;

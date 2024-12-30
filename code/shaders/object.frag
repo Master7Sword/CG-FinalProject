@@ -33,6 +33,15 @@ uniform int numLights;
 #define SPECULAR 0.5
 #define SHININESS 32 // 高光强度
 
+// 光线衰减函数
+float calculateAttenuation(float distance) {
+    // 衰减系数，可以根据需要调整
+    float constant = 1.0;
+    float linear = 0.09;
+    float quadratic = 0.032;
+    return 1.0 / (constant + linear * distance + quadratic * (distance * distance));
+}
+
 void main() {
     // 法线贴图处理
     vec3 norm = Normal;
@@ -42,19 +51,24 @@ void main() {
     vec3 specular = vec3(0.0); // 镜面反射
 
     for (int i = 0; i < numLights; ++i) {
+        // 计算光源到片段的距离
+        float distance = length(lights[i].position - FragPos);
+        // 计算衰减系数
+        float attenuation = calculateAttenuation(distance);
+
         // 环境光
-        ambient += AMBIENT * vec3(texture(material.diffuse, TexCoord)) * lights[i].intensity;
+        ambient += AMBIENT * vec3(texture(material.diffuse, TexCoord)) * lights[i].intensity * attenuation;
 
         // 漫反射光
         vec3 lightDir = normalize(lights[i].position - FragPos);
         float diff = max(dot(norm, lightDir), 0.0);
-        diffuse += DIFFUSE * diff * vec3(texture(material.diffuse, TexCoord)) * lights[i].intensity;
+        diffuse += DIFFUSE * diff * vec3(texture(material.diffuse, TexCoord)) * lights[i].intensity * attenuation;
 
         // 镜面高光
         vec3 viewDir = normalize(viewPos - FragPos);
         vec3 halfwayDir = normalize(lightDir + viewDir);
         float spec = pow(max(dot(norm, halfwayDir), 0.0), SHININESS);
-        specular += SPECULAR * spec * vec3(texture(material.diffuse, TexCoord)) * lights[i].intensity;
+        specular += SPECULAR * spec * vec3(texture(material.diffuse, TexCoord)) * lights[i].intensity * attenuation;
     }
     // 发射光
     vec3 emission = vec3(texture(material.emission, TexCoord));
@@ -62,13 +76,9 @@ void main() {
     // 透明度
     float alpha = texture(material.alpha, TexCoord).r;
     if(alpha > 0.01) alpha = 1.0;
-    else alpha = 0.0;
 
     // 最终颜色
     vec3 finalColor = ambient + diffuse + specular + emission;
     FragColor = vec4(finalColor, alpha);
 
-    // Alpha裁剪
-    if (FragColor.a < 0.1)
-        discard;
 }

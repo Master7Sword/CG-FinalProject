@@ -86,7 +86,7 @@ void processInput(GLFWwindow *window, float deltaTime, Fireworks & firework)
 }
 
 std::vector<Light> lights = {};                                                        // 烟花产生的光源，动态调整
-Light env_light = {{0.0f, 1000.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, 0.5f, 114514.1919810f}; // 预设月光，每次渲染时加入lights中
+Light env_light = {{0.0f, 100.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, 150.0f, 1145141919810.0f}; // 预设月光，每次渲染时加入lights中
 
 int main()
 {
@@ -228,8 +228,8 @@ int main()
 
         frame_log += measureTime("Buffer & Event", bufferSwapStart);
         frame_log += measureTime("Total Frame", frameStart);
-        std::cout << "\033[2J\033[1;1H"; // ANSI 清屏序列
-        std::cout << frame_log;
+        // std::cout << "\033[2J\033[1;1H"; // ANSI 清屏序列
+        // std::cout << frame_log;
     }
 
     glfwTerminate();

@@ -38,8 +38,7 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
         // 更新当前粒子属性
         float k = -0.02; // 空气阻力系数
         a = v * v * k + glm::vec3(0.0f,-2.0f, 0.0f);
-        // if(!is_boomed || pattern == 0)
-            v += a * deltaTime;
+        v += a * deltaTime;
         loc += v * deltaTime;
 
         if (!is_boomed) {
@@ -53,8 +52,8 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                 Light explosionLight;
                 explosionLight.position = loc;
                 explosionLight.color = color;
-                explosionLight.intensity = 0.2f; // 初始强度
-                explosionLight.ttl = 2.0f;       // 持续时间（秒）
+                explosionLight.intensity = 20.0f; // 初始强度
+                explosionLight.ttl = 5.0f;       // 持续时间（秒）
                 lights.push_back(explosionLight);
 
                 switch (pattern) {
