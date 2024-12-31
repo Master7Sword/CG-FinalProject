@@ -20,6 +20,7 @@
 
 // 处理按键输入
 bool enterKeyPressed = false;
+bool switchKeyPressed = false;
 void processInput(GLFWwindow *window, float deltaTime, Fireworks & firework)
 {
     const float cameraSpeed = 1.0f * deltaTime; // 摄像机移动速度
@@ -64,7 +65,16 @@ void processInput(GLFWwindow *window, float deltaTime, Fireworks & firework)
     // 切换烟花
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
     {
-        firework.switchFirework();
+        if (!switchKeyPressed)
+        {
+            switchKeyPressed = true; // 标记为已按下
+            firework.switchFirework();
+        }
+    }
+    else
+    {
+        // 当按键松开时重置标记
+        switchKeyPressed = false;
     }
 
     // 发射烟花
