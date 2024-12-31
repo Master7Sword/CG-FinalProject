@@ -145,30 +145,6 @@ $$
 $$
 
 
-#### 2.1.5 图案爆炸效果
-在 Particle 类中增加一个属性 pattern 来管理是否爆炸时生成指定图案。通过 Fireworks 类发射时装填的第一颗粒子的 pattern 属性决定这一个烟花的爆炸是否为生成指定图案效果。
-
-图案的信息可以通过已有的图片生成，在 `code/patterns` 下用 python 脚本 opencv 库采样图片信息，生成图案的顶点坐标、颜色信息存储到一个头文件中供 Particle 使用。采样时，生成的坐标需要从图片存储时左上角为坐标原点变换为以图片中心为坐标原点，这样才能使得爆炸时具有从中间开始扩散的效果。同时坐标还需要绕 Y 轴翻转。
-
-Particle 爆炸时，生成的新粒子位置以原来的父粒子坐标 $\vec P_{parent}$ 为基准 Base，加上脚本采样的坐标 $\vec P_{pattern}$ 乘上一个缩小比例 $\alpha$，就是新粒子的初始坐标：
-
-$$
-\vec P_0=\vec P_{parent}+\alpha\cdot\vec P_{pattern}
-$$
-
-为了保证图案扩散时不变形，不影响视觉效果，可以通过控制新粒子速度大小和方向使其沿着预定路线“扩散”，我们期望它的终点或者说最终被回收时的坐标计算和初始坐标类似，为：
-
-$$
-\vec P_1=\vec P_{parent}+\beta\cdot\vec P_{pattern}
-$$
-
-其中 $\beta$ 为放大比例。于是计算新粒子的速度为：
-
-$$
-\vec v=\frac{\alpha}{\beta}\cdot(\vec P_{1}-\vec P_{0})=\frac{\alpha}{\beta}\cdot(\beta\cdot\vec P_{pattern}-\alpha\cdot\vec P_{pattern})
-$$
-
-
 ### 2.2 音效系统
 
 #### 2.2.1 音效系统设计目标
