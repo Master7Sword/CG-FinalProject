@@ -9,14 +9,14 @@
 
 
 void Skybox::initialize() {
-    skybox_size = 60.0;
-    float skyboxVertices[] = {      
-    -skybox_size,  skybox_size, -skybox_size,
-    -skybox_size, -skybox_size, -skybox_size,
-     skybox_size, -skybox_size, -skybox_size,
-     skybox_size, -skybox_size, -skybox_size,
-     skybox_size,  skybox_size, -skybox_size,
-    -skybox_size,  skybox_size, -skybox_size,
+        skybox_size = 60.0;
+        float skyboxVertices[] = {      
+        -skybox_size,  skybox_size, -skybox_size,
+        -skybox_size, -skybox_size, -skybox_size,
+        skybox_size, -skybox_size, -skybox_size,
+        skybox_size, -skybox_size, -skybox_size,
+        skybox_size,  skybox_size, -skybox_size,
+        -skybox_size,  skybox_size, -skybox_size,
 
     -skybox_size, -skybox_size,  skybox_size,
     -skybox_size, -skybox_size, -skybox_size,
