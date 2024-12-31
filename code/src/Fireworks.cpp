@@ -37,15 +37,8 @@ void Fireworks::launch() {
   particles.push_back(test);
 }
 
-void Fireworks::switchFirework(int key) {
-  switch(key) {
-    case GLFW_KEY_1:
-      pattern = 1;
-      break;
-    case GLFW_KEY_0:
-      pattern = 0;
-      break;
-  }
+void Fireworks::switchFirework() {
+  pattern = (pattern + 1) % 2;
 }
 
 void Fireworks::update(float deltaTime, std::vector<Light> &lights) {

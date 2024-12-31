@@ -66,9 +66,9 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
 
                 switch (pattern) {
                 case 1: {  // MSC
-                    std::vector<glm::vec3> s_locations = msc(loc, 0.1);
-                    std::vector<glm::vec3> d_locations = msc(loc, 1.0);
-                    glm::vec3 color = glm::vec3(200.0f/255.0f, 200.0f/255.0f, 255.0f/255.0f);
+                    std::vector<glm::vec3> s_locations = msc_positions(loc, 0.1);
+                    std::vector<glm::vec3> d_locations = msc_positions(loc, 1.0);
+                    std::vector<glm::vec3> rgbs = msc_rgbs();
                     for (int i = 0; i < s_locations.size(); ++i) {
                         glm::vec3 dir = glm::normalize(glm::vec3(
                             d_locations[i].x - s_locations[i].x, 
@@ -81,7 +81,7 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                             loc,
                             dir,
                             velocity,
-                            color,
+                            rgbs[i],
                             1.0f,
                             5.0f,
                             true,
