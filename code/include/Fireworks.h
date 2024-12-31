@@ -10,7 +10,7 @@ public:
   void render(const std::vector<Particle>& particles, const glm::mat4& view, const glm::mat4& projection);
   long numParticles() const { return particles.size(); };
   void launch();
-  void switchFirework(int mode);
+  void switchFirework();
   void update(float deltaTime, std::vector<Light>& lights);
   void render(const glm::mat4& view, const glm::mat4& projection);
 

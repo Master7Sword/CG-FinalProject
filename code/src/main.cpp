@@ -64,7 +64,7 @@ void processInput(GLFWwindow *window, float deltaTime, Fireworks & firework)
     // 切换烟花
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
     {
-        firework.switchFirework(GLFW_KEY_1);
+        firework.switchFirework();
     }
 
     // 发射烟花
