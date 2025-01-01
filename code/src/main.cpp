@@ -136,7 +136,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // 创建窗口
-    int window_width = 1200, window_height = 800;
+    int window_width = 1800, window_height = 1200;
     GLFWwindow *window = glfwCreateWindow(window_width, window_height, "Firework", nullptr, nullptr);
     if (!window)
     {
