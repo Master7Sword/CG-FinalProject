@@ -2,6 +2,10 @@
 
  ![](https://img.shields.io/badge/platform-linux-brightgreen.svg)
 
+ ## 演示视频
+
+ https://www.bilibili.com/video/BV1Hu6oYvEc4
+
 ## 环境配置
 
 for Linux:
