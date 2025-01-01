@@ -68,61 +68,61 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                 lights.push_back(explosionLight);
 
                 switch (pattern) {
-                case 1: {  // MSC
-                    std::vector<glm::vec3> s_locations = msc_positions(loc, 0.1);
-                    std::vector<glm::vec3> d_locations = msc_positions(loc, 1.0);
-                    std::vector<glm::vec3> rgbs = msc_rgbs();
-                    for (int i = 0; i < s_locations.size(); ++i) {
-                        glm::vec3 dir = glm::normalize(glm::vec3(
-                            d_locations[i].x - s_locations[i].x, 
-                            d_locations[i].y - s_locations[i].y,
-                            d_locations[i].z - s_locations[i].z
-                        ));
-                        glm::vec3 velocity = dir * (glm::distance(d_locations[i], s_locations[i]) * 0.01f);
-                        Particle p;
-                        p.initialize(
-                            loc,
-                            dir,
-                            velocity,
-                            rgbs[i],
-                            1.0f,
-                            5.0f,
-                            true,
-                            false,
-                            glm::vec3(0.0f, 0.0f, 0.0f),
-                            pattern
-                        );
-                        newParticles.push_back(p);
-                    }
-                } break;
-                case 2: {  // 龙图
-                    std::vector<glm::vec3> s_locations = long_positions(loc, 0.5);
-                    std::vector<glm::vec3> d_locations = long_positions(loc, 50.0);
-                    std::vector<glm::vec3> rgbs = long_rgbs();
-                    for (int i = 0; i < s_locations.size(); ++i) {
-                        glm::vec3 dir = glm::normalize(glm::vec3(
-                            d_locations[i].x - s_locations[i].x, 
-                            d_locations[i].y - s_locations[i].y,
-                            d_locations[i].z - s_locations[i].z
-                        ));
-                        glm::vec3 velocity = dir * (glm::distance(d_locations[i], s_locations[i]) * 0.01f);
-                        Particle p;
-                        p.initialize(
-                            loc,
-                            dir,
-                            velocity,
-                            rgbs[i],
-                            1.0f,
-                            5.0f,
-                            true,
-                            false,
-                            glm::vec3(0.0f, 0.0f, 0.0f),
-                            pattern
-                        );
-                        newParticles.push_back(p);
-                    }
-                } break;
-                case 3: {  // 猫猫虫
+                // case 1: {  // MSC
+                //     std::vector<glm::vec3> s_locations = msc_positions(loc, 0.1);
+                //     std::vector<glm::vec3> d_locations = msc_positions(loc, 1.0);
+                //     std::vector<glm::vec3> rgbs = msc_rgbs();
+                //     for (int i = 0; i < s_locations.size(); ++i) {
+                //         glm::vec3 dir = glm::normalize(glm::vec3(
+                //             d_locations[i].x - s_locations[i].x, 
+                //             d_locations[i].y - s_locations[i].y,
+                //             d_locations[i].z - s_locations[i].z
+                //         ));
+                //         glm::vec3 velocity = dir * (glm::distance(d_locations[i], s_locations[i]) * 0.01f);
+                //         Particle p;
+                //         p.initialize(
+                //             loc,
+                //             dir,
+                //             velocity,
+                //             rgbs[i],
+                //             1.0f,
+                //             5.0f,
+                //             true,
+                //             false,
+                //             glm::vec3(0.0f, 0.0f, 0.0f),
+                //             pattern
+                //         );
+                //         newParticles.push_back(p);
+                //     }
+                // } break;
+                // case 2: {  // 龙图
+                //     std::vector<glm::vec3> s_locations = long_positions(loc, 0.5);
+                //     std::vector<glm::vec3> d_locations = long_positions(loc, 50.0);
+                //     std::vector<glm::vec3> rgbs = long_rgbs();
+                //     for (int i = 0; i < s_locations.size(); ++i) {
+                //         glm::vec3 dir = glm::normalize(glm::vec3(
+                //             d_locations[i].x - s_locations[i].x, 
+                //             d_locations[i].y - s_locations[i].y,
+                //             d_locations[i].z - s_locations[i].z
+                //         ));
+                //         glm::vec3 velocity = dir * (glm::distance(d_locations[i], s_locations[i]) * 0.01f);
+                //         Particle p;
+                //         p.initialize(
+                //             loc,
+                //             dir,
+                //             velocity,
+                //             rgbs[i],
+                //             1.0f,
+                //             5.0f,
+                //             true,
+                //             false,
+                //             glm::vec3(0.0f, 0.0f, 0.0f),
+                //             pattern
+                //         );
+                //         newParticles.push_back(p);
+                //     }
+                // } break;
+                case 1: {  // 猫猫虫
                     std::vector<glm::vec3> s_locations = maomaochong_positions(loc, 0.5);
                     std::vector<glm::vec3> d_locations = maomaochong_positions(loc, 50.0);
                     std::vector<glm::vec3> rgbs = maomaochong_rgbs();
@@ -149,33 +149,33 @@ void Particle::update(float deltaTime, std::vector<Particle>& newParticles, std:
                         newParticles.push_back(p);
                     }
                 } break;
-                case 4: {  // taffy
-                    std::vector<glm::vec3> s_locations = taffy_positions(loc, 1.0);
-                    std::vector<glm::vec3> d_locations = taffy_positions(loc, 10.0);
-                    std::vector<glm::vec3> rgbs = taffy_rgbs();
-                    for (int i = 0; i < s_locations.size(); ++i) {
-                        glm::vec3 dir = glm::normalize(glm::vec3(
-                            d_locations[i].x - s_locations[i].x, 
-                            d_locations[i].y - s_locations[i].y,
-                            d_locations[i].z - s_locations[i].z
-                        ));
-                        glm::vec3 velocity = dir * (glm::distance(d_locations[i], s_locations[i]) * 0.01f);
-                        Particle p;
-                        p.initialize(
-                            loc,
-                            dir,
-                            velocity,
-                            rgbs[i],
-                            1.0f,
-                            5.0f,
-                            true,
-                            false,
-                            glm::vec3(0.0f, 0.0f, 0.0f),
-                            pattern
-                        );
-                        newParticles.push_back(p);
-                    }
-                } break;
+                // case 4: {  // taffy
+                //     std::vector<glm::vec3> s_locations = taffy_positions(loc, 1.0);
+                //     std::vector<glm::vec3> d_locations = taffy_positions(loc, 10.0);
+                //     std::vector<glm::vec3> rgbs = taffy_rgbs();
+                //     for (int i = 0; i < s_locations.size(); ++i) {
+                //         glm::vec3 dir = glm::normalize(glm::vec3(
+                //             d_locations[i].x - s_locations[i].x, 
+                //             d_locations[i].y - s_locations[i].y,
+                //             d_locations[i].z - s_locations[i].z
+                //         ));
+                //         glm::vec3 velocity = dir * (glm::distance(d_locations[i], s_locations[i]) * 0.01f);
+                //         Particle p;
+                //         p.initialize(
+                //             loc,
+                //             dir,
+                //             velocity,
+                //             rgbs[i],
+                //             1.0f,
+                //             5.0f,
+                //             true,
+                //             false,
+                //             glm::vec3(0.0f, 0.0f, 0.0f),
+                //             pattern
+                //         );
+                //         newParticles.push_back(p);
+                //     }
+                // } break;
                 default:  // 无图案
                     glm::vec3 color1 = getRandomColor();
                     glm::vec3 color2 = getRandomColor();

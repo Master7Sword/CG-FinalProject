@@ -43,7 +43,7 @@ private:
     bool is_boomed;      // 是否已爆炸
     bool recycle;        // 是否已可回收
     bool is_tail;        // 是否为拖尾粒子
-    int pattern;         // 爆炸图案, 0:无图案, 1:MSC
+    int pattern;         // 爆炸图案
 };
 
 

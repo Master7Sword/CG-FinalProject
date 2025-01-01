@@ -38,7 +38,7 @@ void Fireworks::launch() {
 }
 
 void Fireworks::switchFirework() {
-  pattern = (pattern + 1) % 5;
+  pattern = (pattern + 1) % 2;
 }
 
 void Fireworks::update(float deltaTime, std::vector<Light> &lights) {
