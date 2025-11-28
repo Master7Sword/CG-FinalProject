@@ -2,16 +2,6 @@
 
 ## <center>题目：基于OpenGL的3D烟花粒子实时渲染系统</center>
 
-<style>
-.center 
-{
-  width: auto;
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
-
 <div class="center">
 
 </div>
@@ -362,4 +352,5 @@ $$
 1. 本实验完整地搭建了烟花粒子的模拟/渲染框架，但是仅实现了几种烟花样式，而现实世界中的烟花种类繁多，我们其实还可以扩展出更多的烟花样式。
 
 2. 用户交互体验还可以改进，现在的烟花发射是在一定区域内的随机位置、速度和颜色，最好可以让用户自行决定烟花的各个属性。
+
 
